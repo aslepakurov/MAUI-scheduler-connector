@@ -40,8 +40,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <target>1.7</target>
-                    <source>1.7</source>
+                    <target>1.6</target>
+                    <source>1.6</source>
                 </configuration>
             </plugin>
             <plugin>
@@ -57,6 +57,7 @@
                             org.aopalliance.aop,
                             org.springframework.aop,
                             org.springframework.aop.framework,
+                            org.springframework.beans.factory,
                             org.springframework.beans.factory.config,
                             net.sf.cglib.reflect,
                             net.sf.cglib.core,
@@ -68,6 +69,9 @@
                             javax.jms,
                             javax.resource,
                         </Import-Package>
+                        <Export-Package>
+                            ua.kpi.comsys
+                        </Export-Package>
                         <!--
                            add ,plugin.xml if it's present i.e.
                            src/main/resources,plugin.xml
@@ -89,54 +93,54 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-antrun-plugin</artifactId>-->
-            <!--<version>1.7</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<phase>install</phase>-->
-            <!--<configuration>-->
-            <!--<tasks>-->
-            <!--<taskdef resource="net/sf/antcontrib/antcontrib.properties"-->
-            <!--classpathref="maven.plugin.classpath"/>-->
-            <!--<if>-->
-            <!--<equals arg1="${SKIP_DEPLOYMENT}" arg2="false"/>-->
-            <!--<then>-->
-            <!--<scp file="${project.build.directory}/${project.artifactId}-${project.version}.jar"-->
-            <!--trust="true"-->
-            <!--todir="${PORTAL_SERVER_LOGIN}@${PORTAL_SERVER_HOST}:/opt/servicemix/deploy/${project.artifactId}-${project.version}.jar"-->
-            <!--password="${PORTAL_SERVER_PASSWORD}"/>-->
-            <!--</then>-->
-            <!--</if>-->
-            <!--</tasks>-->
-            <!--</configuration>-->
-            <!--<goals>-->
-            <!--<goal>run</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--&lt;!&ndash;suppress osmorcNonOsgiMavenDependency &ndash;&gt;-->
-            <!--<dependency>-->
-            <!--<groupId>ant-contrib</groupId>-->
-            <!--<artifactId>ant-contrib</artifactId>-->
-            <!--<version>20020829</version>-->
-            <!--</dependency>-->
-            <!--&lt;!&ndash;suppress osmorcNonOsgiMavenDependency &ndash;&gt;-->
-            <!--<dependency>-->
-            <!--<groupId>ant</groupId>-->
-            <!--<artifactId>ant-jsch</artifactId>-->
-            <!--<version>1.6.5</version>-->
-            <!--</dependency>-->
-            <!--&lt;!&ndash;suppress osmorcNonOsgiMavenDependency &ndash;&gt;-->
-            <!--<dependency>-->
-            <!--<groupId>jsch</groupId>-->
-            <!--<artifactId>jsch</artifactId>-->
-            <!--<version>0.1.23</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                                         classpathref="maven.plugin.classpath"/>
+                                <if>
+                                    <equals arg1="${SKIP_DEPLOYMENT}" arg2="false"/>
+                                    <then>
+                                        <scp file="${project.build.directory}/${project.artifactId}-${project.version}.jar"
+                                             trust="true"
+                                             todir="${PORTAL_SERVER_LOGIN}@${PORTAL_SERVER_HOST}:/opt/servicemix/deploy/${project.artifactId}-${project.version}.jar"
+                                             password="${PORTAL_SERVER_PASSWORD}"/>
+                                    </then>
+                                </if>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!--suppress osmorcNonOsgiMavenDependency -->
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                    </dependency>
+                    <!--suppress osmorcNonOsgiMavenDependency -->
+                    <dependency>
+                        <groupId>ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.6.5</version>
+                    </dependency>
+                    <!--suppress osmorcNonOsgiMavenDependency -->
+                    <dependency>
+                        <groupId>jsch</groupId>
+                        <artifactId>jsch</artifactId>
+                        <version>0.1.23</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

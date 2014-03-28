@@ -1,6 +1,7 @@
 package ua.kpi.comsys.maui.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.kpi.comsys.maui.bean.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
@@ -16,7 +17,8 @@ import java.util.Collection;
  * @version 28/03/2014
  */
 @Path("/maui")
-public class MAUIService {
+@Component
+public class MauiService {
 
     @Autowired
     private RequestService requestService;

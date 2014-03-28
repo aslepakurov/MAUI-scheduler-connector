@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://camel.apache.org/schema/osgi"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/osgi http://camel.apache.org/schema/osgi/camel-osgi.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--<import resource="classpath:META-INF/cxf/cxf.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf-extension-http.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf-extension-http-jetty.xml"/>-->
+
+    <context:annotation-config/>
+    <context:component-scan base-package="ua.kpi.comsys.maui"/>
+
+    <jaxrs:server id="mauiREST" address="http://0.0.0.0:8888/rest">
+        <jaxrs:serviceBeans>
+            <ref bean="mauiService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+            <entry key="xml" value="application/xml"/>
+        </jaxrs:extensionMappings>
+    </jaxrs:server>
+</beans>
