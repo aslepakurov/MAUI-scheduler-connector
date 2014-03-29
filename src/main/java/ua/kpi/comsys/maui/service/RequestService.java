@@ -18,6 +18,8 @@ public class RequestService {
     @Autowired
     private RequestDAO dao;
 
+    public boolean collectionExist(){return dao.collectionExist();}
+
     public Collection<Request> getRequests() {
         return dao.getRequests();
     }

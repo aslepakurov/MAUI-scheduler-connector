@@ -26,6 +26,7 @@ public class RequestDAO {
 
     public Collection<Request> getRequests() {
         List<Request> requests = mongoTemplate.findAll(Request.class);
+        LOG.info(requests.size()+" requests found!");
         return requests;
     }
 
@@ -34,6 +35,15 @@ public class RequestDAO {
     }
 
     public void save(Request request) {
+        if(!mongoTemplate.collectionExists(Request.class)){
+            LOG.info("Created collection!");
+            mongoTemplate.createCollection(Request.class);
+        }
         mongoTemplate.save(request);
+        LOG.info("Request with id="+request.getId()+" saved!");
+    }
+
+    public boolean collectionExist(){
+        return mongoTemplate.collectionExists(Request.class);
     }
 }
