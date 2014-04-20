@@ -1,16 +1,18 @@
 package ua.kpi.comsys.maui.rest;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.codehaus.jettison.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.kpi.comsys.maui.bean.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
@@ -23,8 +25,8 @@ import java.util.Collection;
  */
 @Path("/maui")
 @Component
-public class MauiService {
-    private static final transient Log LOG = LogFactory.getLog(MauiService.class);
+public class MAUIService {
+//    private static final transient Log LOG = LogFactory.getLog(MAUIService.class);
     @Autowired
     private RequestService requestService;
 
@@ -32,7 +34,6 @@ public class MauiService {
     @Path("/status")
     public Response getSimpleAnswer() {
         String result = "MAUI Rest service is working!\n";
-        result += Request.class.getName() + " collection " + (requestService.collectionExist() ? "exists." : "does not exist.");
         return Response.status(200).entity(result).build();
     }
 
@@ -48,18 +49,41 @@ public class MauiService {
         return requestService.getRequest(id);
     }
 
+    @GET
+    @Path("/param/{type}")
+    public Response getParam(@PathParam("type") String type) {
+        String response = "";
+        if(type.equals("simple")) {
+            response = "{" +
+                        "\"param\":[" +
+                                    "{\"name\":\"requestName\"," +
+                                    "\"type\":\"text\"," +
+                                    "\"restrictions\":[\"string-only\"]}," +
+                    "{\"name\":\"priority\"," +
+                    "\"type\":\"text\"," +
+                    "\"restrictions\":[\"integer\",\"over-zero\"]" +
+                    "}" +
+                                    "]" +
+                        "}";
+        }
+        String json = (new Gson()).fromJson(response, JsonElement.class).toString();
+        return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
+    }
+
     @POST
     @Path("/postrequest")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(JSONObject request) {
-        JsonObject json = (new Gson()).fromJson(request.toString(), JsonObject.class);
-        String id = json.get("id").getAsString();
+    public Response save(String request) {
+        JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
+        String id = ""+Math.abs((int)(json.get("requestName").getAsString().hashCode()*Math.random()));
         String priority = json.get("priority").getAsString();
         Request request1 = new Request();
         request1.setId(id);
         request1.setPriority(priority);
-        requestService.save(request1);
-        return Response.ok().type(MediaType.APPLICATION_JSON).entity(request1.getId()).build();
+        Logger.getRootLogger().info(request1.getId()+"!!!!!!!!!!!!!!!!!!!!");
+        Logger.getRootLogger().info(request1.getPriority()+"!!!!!!!!!!!!!!!!!!!!!!!1");
+//        requestService.save(request1);
+        String jsonResponse = (new Gson()).fromJson("{\"id\":\""+request1.getId()+"\"}", JsonElement.class).toString();
+        return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }
 
 }

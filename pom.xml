@@ -14,9 +14,21 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>3.1.1.RELEASE</spring.version>
-        <camel-version>2.8.0-fuse-02-05</camel-version>
+        <camel-version>2.8.0</camel-version>
         <activemq-version>5.5.0-fuse-00-27</activemq-version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>main</id>
+            <url>http://mirrors.ibiblio.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>repository.jboss.org-public</id>
+            <name>JBoss.org Maven repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 
     <build>
         <resources>
@@ -70,7 +82,8 @@
                             javax.resource,
                         </Import-Package>
                         <Export-Package>
-                            ua.kpi.comsys
+                            ua.kpi.comsys,
+                            org.apache.commons,
                         </Export-Package>
                         <!--
                            add ,plugin.xml if it's present i.e.
@@ -93,54 +106,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <configuration>
-                            <tasks>
-                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-                                         classpathref="maven.plugin.classpath"/>
-                                <if>
-                                    <equals arg1="${SKIP_DEPLOYMENT}" arg2="false"/>
-                                    <then>
-                                        <scp file="${project.build.directory}/${project.artifactId}-${project.version}.jar"
-                                             trust="true"
-                                             todir="${PORTAL_SERVER_LOGIN}@${PORTAL_SERVER_HOST}:/opt/servicemix/deploy/${project.artifactId}-${project.version}.jar"
-                                             password="${PORTAL_SERVER_PASSWORD}"/>
-                                    </then>
-                                </if>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <!--suppress osmorcNonOsgiMavenDependency -->
-                    <dependency>
-                        <groupId>ant-contrib</groupId>
-                        <artifactId>ant-contrib</artifactId>
-                        <version>20020829</version>
-                    </dependency>
-                    <!--suppress osmorcNonOsgiMavenDependency -->
-                    <dependency>
-                        <groupId>ant</groupId>
-                        <artifactId>ant-jsch</artifactId>
-                        <version>1.6.5</version>
-                    </dependency>
-                    <!--suppress osmorcNonOsgiMavenDependency -->
-                    <dependency>
-                        <groupId>jsch</groupId>
-                        <artifactId>jsch</artifactId>
-                        <version>0.1.23</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -176,11 +142,16 @@
             <artifactId>camel-jetty</artifactId>
             <version>${camel-version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>javax.jms</groupId>-->
+            <!--<artifactId>jms</artifactId>-->
+            <!--<version>1.1</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>jms</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -228,17 +199,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.context</artifactId>
+            <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>org.springframework.transaction</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -346,6 +312,7 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
