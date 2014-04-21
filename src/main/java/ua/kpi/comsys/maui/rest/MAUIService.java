@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.kpi.comsys.maui.bean.Request;
+import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
 import javax.ws.rs.GET;
@@ -45,8 +45,9 @@ public class MAUIService {
 
     @GET
     @Path("/request/{id}")
-    public Request getRequest(@PathParam("id") String id) {
-        return requestService.getRequest(id);
+    public Response getRequest(@PathParam("id") String id) {
+        String jsonResponse = (new Gson()).toJson(requestService.getRequest(id));
+        return Response.status(200).entity(jsonResponse).build();
     }
 
     @GET
@@ -75,13 +76,16 @@ public class MAUIService {
     public Response save(String request) {
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
         String id = ""+Math.abs((int)(json.get("requestName").getAsString().hashCode()*Math.random()));
+        String name = json.get("requestName").getAsString();
         String priority = json.get("priority").getAsString();
         Request request1 = new Request();
         request1.setId(id);
+        request1.setName(name);
         request1.setPriority(priority);
-        Logger.getRootLogger().info(request1.getId()+"!!!!!!!!!!!!!!!!!!!!");
+        Logger.getRootLogger().info(request1.getId() + "!!!!!!!!!!!!!!!!!!!!");
+        Logger.getRootLogger().info(request1.getName()+"!!!!!!!!!!!!!!!!!!!!");
         Logger.getRootLogger().info(request1.getPriority()+"!!!!!!!!!!!!!!!!!!!!!!!1");
-//        requestService.save(request1);
+        requestService.save(request1);
         String jsonResponse = (new Gson()).fromJson("{\"id\":\""+request1.getId()+"\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }

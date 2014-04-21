@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import ua.kpi.comsys.maui.bean.Request;
+import ua.kpi.comsys.maui.domain.Request;
 
 import java.util.Collection;
 import java.util.List;

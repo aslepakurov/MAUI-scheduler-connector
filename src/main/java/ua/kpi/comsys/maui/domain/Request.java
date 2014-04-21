@@ -1,4 +1,4 @@
-package ua.kpi.comsys.maui.bean;
+package ua.kpi.comsys.maui.domain;
 
 import org.springframework.data.annotation.Id;
 
@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 public class Request {
     @Id
     private String id;
+    private String name;
     private String priority;
     //TODO: lift me up
 
@@ -21,6 +22,14 @@ public class Request {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPriority() {
