@@ -1,4 +1,4 @@
-package ua.kpi.comsys.maui.bean;
+package ua.kpi.comsys.maui.domain;
 
 import org.springframework.data.annotation.Id;
 

@@ -2,7 +2,7 @@ package ua.kpi.comsys.maui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.kpi.comsys.maui.bean.Request;
+import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.dao.RequestDAO;
 
 import java.util.Collection;
@@ -27,6 +27,8 @@ public class RequestService {
     public Request getRequest(String id) {
         return dao.getRequest(id);
     }
+
+    public void remove(String id) {dao.remove(id);}
 
     public void save(Request request) {
         dao.save(request);
