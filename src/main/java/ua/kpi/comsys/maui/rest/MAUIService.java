@@ -3,7 +3,6 @@ package ua.kpi.comsys.maui.rest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.kpi.comsys.maui.domain.Request;
@@ -16,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  * MAUIService Class
@@ -26,7 +26,7 @@ import java.util.Collection;
 @Path("/maui")
 @Component
 public class MAUIService {
-//    private static final transient Log LOG = LogFactory.getLog(MAUIService.class);
+    private static final Logger LOG = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
 
@@ -39,15 +39,32 @@ public class MAUIService {
 
     @GET
     @Path("/requests")
-    public Collection<Request> getRequests() {
-        return requestService.getRequests();
+    public Response getRequests() {
+        Collection<Request> request = requestService.getRequests();
+        if (request == null) {
+            Response.status(500).build();
+        }
+        return Response.status(200).entity((new Gson()).toJson(request)).build();
     }
 
     @GET
     @Path("/request/{id}")
     public Response getRequest(@PathParam("id") String id) {
-        String jsonResponse = (new Gson()).toJson(requestService.getRequest(id));
-        return Response.status(200).entity(jsonResponse).build();
+        Request request = requestService.getRequest(id);
+        if (request == null) {
+            Response.status(500).build();
+        }
+        return Response.status(200).entity((new Gson()).toJson(request)).build();
+    }
+
+    @GET
+    @Path("/request/{id}")
+    public Response removeRequest(@PathParam("id") String id) {
+        Request request = requestService.getRequest(id);
+        if (request == null) {
+            Response.status(500).build();
+        }
+        return Response.status(200).entity((new Gson()).toJson(request)).build();
     }
 
     @GET
@@ -76,15 +93,12 @@ public class MAUIService {
     public Response save(String request) {
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
         String id = ""+Math.abs((int)(json.get("requestName").getAsString().hashCode()*Math.random()));
-        String name = json.get("requestName").getAsString();
         String priority = json.get("priority").getAsString();
         Request request1 = new Request();
         request1.setId(id);
-        request1.setName(name);
         request1.setPriority(priority);
-        Logger.getRootLogger().info(request1.getId() + "!!!!!!!!!!!!!!!!!!!!");
-        Logger.getRootLogger().info(request1.getName()+"!!!!!!!!!!!!!!!!!!!!");
-        Logger.getRootLogger().info(request1.getPriority()+"!!!!!!!!!!!!!!!!!!!!!!!1");
+        LOG.info(request1.getId());
+        LOG.info(request1.getPriority());
         requestService.save(request1);
         String jsonResponse = (new Gson()).fromJson("{\"id\":\""+request1.getId()+"\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();

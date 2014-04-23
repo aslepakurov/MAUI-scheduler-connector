@@ -28,6 +28,8 @@ public class RequestService {
         return dao.getRequest(id);
     }
 
+    public void remove(String id) {dao.remove(id);}
+
     public void save(Request request) {
         dao.save(request);
     }
