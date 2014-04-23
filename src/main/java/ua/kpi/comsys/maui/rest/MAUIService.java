@@ -42,7 +42,7 @@ public class MAUIService {
     public Response getRequests() {
         Collection<Request> request = requestService.getRequests();
         if (request == null) {
-            Response.status(500).build();
+            return Response.status(500).build();
         }
         return Response.status(200).entity((new Gson()).toJson(request)).build();
     }
@@ -52,7 +52,7 @@ public class MAUIService {
     public Response getRequest(@PathParam("id") String id) {
         Request request = requestService.getRequest(id);
         if (request == null) {
-            Response.status(500).build();
+            return Response.status(500).build();
         }
         return Response.status(200).entity((new Gson()).toJson(request)).build();
     }
@@ -62,7 +62,7 @@ public class MAUIService {
     public Response removeRequest(@PathParam("id") String id) {
         Request request = requestService.getRequest(id);
         if (request == null) {
-            Response.status(500).build();
+            return Response.status(500).build();
         }
         return Response.status(200).entity((new Gson()).toJson(request)).build();
     }
