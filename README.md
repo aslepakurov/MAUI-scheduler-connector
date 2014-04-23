@@ -9,8 +9,11 @@ Additional configuration files:
     {KARAF_HOME}/etc/rest.properties    - rest service (example src/test/resources/rest.properties)
     {KARAF_HOME}/etc/db.properties      - database     (example src/test/resources/db.properties)
 
-<GET> ../rest/maui/status           - get REST WS status
-<GET> ../rest/maui/requests         - get all requests
-<GET> ../rest/maui/request/{id}     - get request with {id}
-<GET> ../rest/maui/param/{type}     - get parameters for {type} user
-<POST>../rest/maui/postrequest      - psot request to the system
+Webservices URLs:
+
+    <GET> ../rest/maui/status           - get REST WS status
+    <GET> ../rest/maui/requests         - get all requests
+    <GET> ../rest/maui/request/{id}     - get request with {id}
+    <GET> ../rest/maui/remove/{id}      - remove request with {id}
+    <GET> ../rest/maui/param/{type}     - get parameters for {type} user
+    <POST>../rest/maui/postrequest      - psot request to the system
