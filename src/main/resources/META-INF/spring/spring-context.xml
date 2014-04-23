@@ -22,20 +22,16 @@
         <property name="locations">
             <list>
                 <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg>
-                        <value>etc/rest.properties</value>
-                    </constructor-arg>
+                    <constructor-arg value="etc/rest.properties"/>
                 </bean>
                 <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg>
-                        <value>etc/db.properties</value>
-                    </constructor-arg>
+                    <constructor-arg value="etc/db.properties"/>
                 </bean>
             </list>
         </property>
     </bean>
 
-    <jaxrs:server id="mauiREST" address="http://{rest.url}:{rest.port}/{rest.root}">
+    <jaxrs:server id="mauiREST" address="http://${rest.host}:${rest.port}/${rest.root}">
         <jaxrs:serviceBeans>
             <ref bean="MAUIService"/>
         </jaxrs:serviceBeans>

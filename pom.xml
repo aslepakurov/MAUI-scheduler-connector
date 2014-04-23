@@ -221,8 +221,8 @@
                             javax.resource,
                         </Import-Package>
                         <Export-Package>
-                            ua.kpi.comsys,
-                            org.apache.commons,
+                            ua.kpi.comsys.maui
+                            <!-- org.apache.commons,-->
                         </Export-Package>
                     </instructions>
                 </configuration>
