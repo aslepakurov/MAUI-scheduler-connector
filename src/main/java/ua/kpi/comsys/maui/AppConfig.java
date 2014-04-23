@@ -20,8 +20,8 @@ import java.net.UnknownHostException;
 public class AppConfig {
     @Value("${db.host}")
     private String host;
-    @Value("${db.collection}")
-    private String collection;
+    @Value("${db.schema}")
+    private String schema;
     public @Bean
     Mongo mongo() throws UnknownHostException {
         MongoOptions options = new MongoOptions();
@@ -32,6 +32,6 @@ public class AppConfig {
 
     public @Bean
     MongoOperations mongoTemplate() throws UnknownHostException {
-        return new MongoTemplate(mongo(), collection);
+        return new MongoTemplate(mongo(), schema);
     }
 }
