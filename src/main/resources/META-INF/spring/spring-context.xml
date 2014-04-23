@@ -18,7 +18,24 @@
     <context:annotation-config/>
     <context:component-scan base-package="ua.kpi.comsys.maui"/>
 
-    <jaxrs:server id="mauiREST" address="http://0.0.0.0:8888/rest">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <bean class="org.springframework.core.io.FileSystemResource">
+                    <constructor-arg>
+                        <value>etc/rest.properties</value>
+                    </constructor-arg>
+                </bean>
+                <bean class="org.springframework.core.io.FileSystemResource">
+                    <constructor-arg>
+                        <value>etc/db.properties</value>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <jaxrs:server id="mauiREST" address="http://{rest.url}:{rest.port}/{rest.root}">
         <jaxrs:serviceBeans>
             <ref bean="MAUIService"/>
         </jaxrs:serviceBeans>
