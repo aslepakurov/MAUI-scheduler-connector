@@ -5,7 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.kpi.comsys.maui.domain.Parameters;
 import ua.kpi.comsys.maui.domain.Request;
+import ua.kpi.comsys.maui.domain.parameters.ParameterKind;
+import ua.kpi.comsys.maui.service.ParamService;
 import ua.kpi.comsys.maui.service.RequestService;
 
 import javax.ws.rs.GET;
@@ -29,6 +32,8 @@ public class MAUIService {
     private static final Logger LOG = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
+    @Autowired
+    private ParamService paramService;
 
     @GET
     @Path("/status")
@@ -58,33 +63,20 @@ public class MAUIService {
     }
 
     @GET
-    @Path("/request/{id}")
+    @Path("/remove/{id}")
     public Response removeRequest(@PathParam("id") String id) {
-        Request request = requestService.getRequest(id);
-        if (request == null) {
-            return Response.status(500).build();
-        }
-        return Response.status(200).entity((new Gson()).toJson(request)).build();
+        requestService.remove(id);
+        return Response.status(200).build();
     }
 
     @GET
     @Path("/param/{type}")
     public Response getParam(@PathParam("type") String type) {
-        String response = "";
+        Parameters param = null;
         if(type.equals("simple")) {
-            response = "{" +
-                        "\"param\":[" +
-                                    "{\"name\":\"requestName\"," +
-                                    "\"type\":\"text\"," +
-                                    "\"restrictions\":[\"string-only\"]}," +
-                    "{\"name\":\"priority\"," +
-                    "\"type\":\"text\"," +
-                    "\"restrictions\":[\"integer\",\"over-zero\"]" +
-                    "}" +
-                                    "]" +
-                        "}";
+            param = paramService.getParam(ParameterKind.SIMPLE);
         }
-        String json = (new Gson()).fromJson(response, JsonElement.class).toString();
+        String json = (new Gson()).toJson(param);
         return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
 
@@ -92,10 +84,12 @@ public class MAUIService {
     @Path("/postrequest")
     public Response save(String request) {
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
-        String id = ""+Math.abs((int)(json.get("requestName").getAsString().hashCode()*Math.random()));
+        String requestName = json.get("requestName").getAsString();
+        String id = ""+Math.abs((int)(requestName.hashCode()*Math.random()));
         String priority = json.get("priority").getAsString();
         Request request1 = new Request();
         request1.setId(id);
+        request1.setName(requestName);
         request1.setPriority(priority);
         LOG.info(request1.getId());
         LOG.info(request1.getPriority());

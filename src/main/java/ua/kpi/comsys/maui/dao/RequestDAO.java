@@ -38,7 +38,7 @@ public class RequestDAO {
     }
 
     public void save(Request request) {
-        if(!mongoTemplate.collectionExists(Request.class)){
+        if(!collectionExist()){
             LOG.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
         }

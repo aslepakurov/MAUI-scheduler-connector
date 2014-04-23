@@ -1,6 +1,7 @@
 package ua.kpi.comsys.maui.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Request Class
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.Id;
  * @author Andrew S. Slepakurov
  * @version 28/03/2014
  */
+@Document(collection = "request")
 public class Request {
     @Id
     private String id;
