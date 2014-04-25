@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import ua.kpi.comsys.maui.domain.Parameters;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.domain.parameters.ParameterKind;
@@ -95,6 +96,34 @@ public class MAUIService {
         LOG.info(request1.getPriority());
         requestService.save(request1);
         String jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request1.getId() + "\"}", JsonElement.class).toString();
+        return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
+    }
+
+    @POST
+    @Path("/newpostrequest")
+    public Response save1(String request) {
+        String jsonResponse;
+        JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
+        if (json == null) {
+            return Response.status(500).build();
+        }
+        String type = json.get("type").getAsString();
+        if (!StringUtils.hasText(type)) {
+            return Response.status(500).build();
+        }
+        //TODO: make default values abstract fabric
+        Request request1 = new Request();
+        //TODO: move it to resolver class
+        if (type.equals("simple")) {
+            //TODO: Reflexion maybe?
+            request1.setName(json.get("requestName").getAsString());
+            request1.setPriority(json.get("priority").getAsString());
+            request1.setId("" + Math.abs((int) (request1.getName().hashCode() * Math.random())));
+        }
+        LOG.info(request1.getId());
+        LOG.info(request1.getPriority());
+        requestService.save(request1);
+        jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request1.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }
 
