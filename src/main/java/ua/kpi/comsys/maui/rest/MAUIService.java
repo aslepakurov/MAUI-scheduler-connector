@@ -73,7 +73,7 @@ public class MAUIService {
     @Path("/param/{type}")
     public Response getParam(@PathParam("type") String type) {
         Parameters param = null;
-        if(type.equals("simple")) {
+        if (type.equals("simple")) {
             param = paramService.getParam(ParameterKind.SIMPLE);
         }
         String json = (new Gson()).toJson(param);
@@ -85,7 +85,7 @@ public class MAUIService {
     public Response save(String request) {
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
         String requestName = json.get("requestName").getAsString();
-        String id = ""+Math.abs((int)(requestName.hashCode()*Math.random()));
+        String id = "" + Math.abs((int) (requestName.hashCode() * Math.random()));
         String priority = json.get("priority").getAsString();
         Request request1 = new Request();
         request1.setId(id);
@@ -94,7 +94,7 @@ public class MAUIService {
         LOG.info(request1.getId());
         LOG.info(request1.getPriority());
         requestService.save(request1);
-        String jsonResponse = (new Gson()).fromJson("{\"id\":\""+request1.getId()+"\"}", JsonElement.class).toString();
+        String jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request1.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }
 
