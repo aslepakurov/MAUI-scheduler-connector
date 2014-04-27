@@ -16,8 +16,4 @@ Webservices URLs:
     <GET> ../rest/maui/request/{id}     - get request with {id}
     <GET> ../rest/maui/remove/{id}      - remove request with {id}
     <GET> ../rest/maui/param/{type}     - get parameters for {type} user
-    <POST>../rest/maui/postrequest      - post request to the system
-
-For temporary testing purposes:
-
-    <POST>../rest/maui/newpostrequest   - post request to the system (need "type" param in json body)
+    <POST>../rest/maui/postrequest      - post request to the system (need "type" param in json body)

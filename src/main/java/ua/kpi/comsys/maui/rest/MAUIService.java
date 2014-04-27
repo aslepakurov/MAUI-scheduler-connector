@@ -35,6 +35,8 @@ public class MAUIService {
     private RequestService requestService;
     @Autowired
     private ParamService paramService;
+//    @Autowired
+//    private DefaultFabric defaultFabric;
 
     @GET
     @Path("/status")
@@ -83,24 +85,6 @@ public class MAUIService {
 
     @POST
     @Path("/postrequest")
-    public Response save(String request) {
-        JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
-        String requestName = json.get("requestName").getAsString();
-        String id = "" + Math.abs((int) (requestName.hashCode() * Math.random()));
-        String priority = json.get("priority").getAsString();
-        Request request1 = new Request();
-        request1.setId(id);
-        request1.setName(requestName);
-        request1.setPriority(priority);
-        LOG.info(request1.getId());
-        LOG.info(request1.getPriority());
-        requestService.save(request1);
-        String jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request1.getId() + "\"}", JsonElement.class).toString();
-        return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
-    }
-
-    @POST
-    @Path("/newpostrequest")
     public Response save1(String request) {
         String jsonResponse;
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
@@ -114,7 +98,7 @@ public class MAUIService {
         //TODO: make default values abstract fabric
         Request request1 = new Request();
         //TODO: move it to resolver class
-        if (type.equals("simple")) {
+        if (type.equalsIgnoreCase("simple")) {
             //TODO: Reflexion maybe?
             request1.setName(json.get("requestName").getAsString());
             request1.setPriority(json.get("priority").getAsString());
