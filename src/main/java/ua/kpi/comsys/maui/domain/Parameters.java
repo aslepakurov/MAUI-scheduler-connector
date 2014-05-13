@@ -1,11 +1,12 @@
 package ua.kpi.comsys.maui.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import ua.kpi.comsys.maui.domain.parameters.Param;
 import ua.kpi.comsys.maui.domain.parameters.ParameterKind;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
  * Created by Barabashka on 23/04/14.
  */
 @Document(collection = "parameters")
+@ToString
+@EqualsAndHashCode
 public class Parameters {
     @Id
     private ParameterKind kind;
@@ -34,11 +37,4 @@ public class Parameters {
         this.param = parameters;
     }
 
-    @Override
-    public String toString() {
-        return "Parameters{" +
-                "kind=" + kind.toString() +
-                ", parameters=" + Arrays.toString(param.toArray()) +
-                '}';
-    }
 }

@@ -1,5 +1,7 @@
 package ua.kpi.comsys.maui.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,13 +12,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @version 28/03/2014
  */
 @Document(collection = "request")
+@ToString
+@EqualsAndHashCode
 public class Request {
     @Id
     private String id;
     private String name;
     private String priority;
     //TODO: lift me up
-
 
     public String getId() {
         return id;
