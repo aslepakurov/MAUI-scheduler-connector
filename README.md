@@ -16,3 +16,6 @@ Webservices URLs:
     <GET> ../rest/maui/request/{id}     - get request with {id}
     <GET> ../rest/maui/remove/{id}      - remove request with {id}
     <POST>../rest/maui/postrequest      - post request to the system (need "type" param in json body)
+
+
+
