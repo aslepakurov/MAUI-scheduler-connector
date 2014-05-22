@@ -19,13 +19,13 @@ import java.util.logging.Logger;
  */
 @Component
 public class RequestDAO {
-    private static Logger LOG = Logger.getLogger(RequestDAO.class.getName());
+    private static Logger logger = Logger.getLogger(RequestDAO.class.getName());
     @Autowired
     private MongoOperations mongoTemplate;
 
     public Collection<Request> getRequests() {
         List<Request> requests = mongoTemplate.findAll(Request.class);
-        LOG.info(requests.size()+" requests found!");
+        logger.info(requests.size() + " requests found!");
         return requests;
     }
 
@@ -39,11 +39,11 @@ public class RequestDAO {
 
     public void save(Request request) {
         if(!collectionExist()){
-            LOG.info("Created collection!");
+            logger.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
         }
         mongoTemplate.save(request);
-        LOG.info("Request with id="+request.getId()+" saved!");
+        logger.info("Request with id=" + request.getId() + " saved!");
     }
 
     public boolean collectionExist(){

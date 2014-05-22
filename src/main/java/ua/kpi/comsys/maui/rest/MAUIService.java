@@ -6,10 +6,7 @@ import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import ua.kpi.comsys.maui.domain.Parameters;
 import ua.kpi.comsys.maui.domain.Request;
-import ua.kpi.comsys.maui.domain.parameters.ParameterKind;
-import ua.kpi.comsys.maui.service.ParamService;
 import ua.kpi.comsys.maui.service.RequestService;
 
 import javax.ws.rs.GET;
@@ -33,8 +30,6 @@ public class MAUIService {
     private static final Logger LOG = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
-    @Autowired
-    private ParamService paramService;
 //    @Autowired
 //    private DefaultFabric defaultFabric;
 
@@ -72,16 +67,6 @@ public class MAUIService {
         return Response.status(200).build();
     }
 
-    @GET
-    @Path("/param/{type}")
-    public Response getParam(@PathParam("type") String type) {
-        Parameters param = null;
-        if (type.equals("simple")) {
-            param = paramService.getParam(ParameterKind.SIMPLE);
-        }
-        String json = (new Gson()).toJson(param);
-        return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
-    }
 
     @POST
     @Path("/postrequest")

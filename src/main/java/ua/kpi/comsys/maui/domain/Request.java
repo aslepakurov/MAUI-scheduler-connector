@@ -19,7 +19,6 @@ public class Request {
     private String id;
     private String name;
     private String priority;
-    //TODO: lift me up
 
     public String getId() {
         return id;
