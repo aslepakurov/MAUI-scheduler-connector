@@ -70,15 +70,15 @@ public class MAUIService {
 
     @POST
     @Path("/postrequest")
-    public Response save1(String request) {
+    public Response save(String request) {
         String jsonResponse;
         JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
         if (json == null) {
-            return Response.status(500).build();
+            return Response.status(500).entity("No JSON!").build();
         }
         String type = json.get("type").getAsString();
         if (!StringUtils.hasText(type)) {
-            return Response.status(500).build();
+            return Response.status(500).entity("JSON doesn`t contain a type!").build();
         }
         //TODO: make default values abstract fabric
         Request request1 = new Request();
