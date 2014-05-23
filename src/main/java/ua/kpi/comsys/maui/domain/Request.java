@@ -14,51 +14,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "request")
 @ToString
 @EqualsAndHashCode
-public class Request {
+public abstract class Request {
+
+    public static final double DEFAULT_PROTOCOL_VERSION = 0.5;
+
     @Id
-    private String id;
-    private String name;
-    private String type;
-    private String user;
-    private String priority;
+    private final ClassID classID;
+    private final String command;
+    private final String user;
+    private final long timeStamp;
 
-    public String getId() {
-        return id;
+    protected Request(ClassID id, String user)  {
+        this.classID = id;
+        this.command = id.getCommand();
+        this.user = user;
+        this.timeStamp = System.currentTimeMillis();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public ClassID getClassID() {
+        return classID;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public String getCommand() {
+        return command;
     }
 
     public String getUser() {
         return user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public long getTimeStamp() {
+        return timeStamp;
     }
 }
