@@ -18,6 +18,8 @@ public class Request {
     @Id
     private String id;
     private String name;
+    private String type;
+    private String user;
     private String priority;
 
     public String getId() {
@@ -34,6 +36,22 @@ public class Request {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getPriority() {
