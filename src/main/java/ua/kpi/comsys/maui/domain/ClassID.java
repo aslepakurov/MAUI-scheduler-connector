@@ -1,0 +1,47 @@
+package ua.kpi.comsys.maui.domain;
+
+/**
+ * Created by insane on 5/23/14.
+ */
+public enum ClassID {
+
+    CANCEL_JOB_REQUEST(1),
+    CANCEL_JOB_RESPONSE(2),
+
+    CANCEL_SYS_RESERVATION_REQUEST(3),
+    CANCEL_SYS_RESERVATION_RESPONSE(4),
+
+    CHECK_JOB_REQUEST(5),
+    CHECK_JOB_RESPONSE(6),
+
+    CHECK_NODE_REQUEST(7),
+    CHECK_NODE_RESPONSE(8),
+
+    CHECK_RESERVATION_REQUEST(9),
+    CHECK_RESERVATION_RESPONSE(10),
+
+    HOLD_JOB_REQUEST(11),
+    HOLD_JOB_RESPONSE(12),
+
+    MAUI_CONTROL_REQUEST(13),
+    MAUI_CONTROL_RESPONSE(14),
+
+    SUBMIT_JOB_REQUEST(15),
+    SUBMIT_JOB_RESPONSE(16),
+
+    RELEASE_JOB_REQUEST(17),
+    RELEASE_JOB_RESPONSE(18),
+
+    SET_SYS_RESERVATION_REQUEST(19),
+    SET_SYS_RESERVATION_RESPONSE(20),
+
+    QUEUE_STATE_REQUEST(21),
+    QUEUE_STATE_RESPONSE(22),
+    ;
+
+    private final int id;
+
+    private ClassID(int id) {
+        this.id = id;
+    }
+}
