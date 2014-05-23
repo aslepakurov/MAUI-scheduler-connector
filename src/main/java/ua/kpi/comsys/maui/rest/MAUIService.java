@@ -16,6 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -43,11 +46,22 @@ public class MAUIService {
     @GET
     @Path("/requests")
     public Response getRequests() {
-        Collection<Request> request = requestService.getRequests();
-        if (request == null) {
+        Collection<Request> requests = requestService.getRequests();
+        if (requests == null) {
             return Response.status(500).build();
         }
-        return Response.status(200).entity((new Gson()).toJson(request)).build();
+        return Response.status(200).entity((new Gson()).toJson(requests)).build();
+    }
+
+    @GET
+    @Path("/requestnames")
+    public Response getRequestNames() {
+        Map<String, String> response = new HashMap<String, String>();
+        Collection<Request> requests = requestService.getRequests();
+        for (Request request : requests) {
+            response.put(request.getName(), request.getId());
+        }
+        return Response.status(200).entity((new Gson()).toJson(response)).build();
     }
 
     @GET
@@ -84,10 +98,11 @@ public class MAUIService {
         Request request1 = new Request();
         //TODO: move it to resolver class
         if (type.equalsIgnoreCase("simple")) {
+            String uuid = UUID.randomUUID().toString();
             //TODO: Reflexion maybe?
             request1.setName(json.get("requestName").getAsString());
             request1.setPriority(json.get("priority").getAsString());
-            request1.setId("" + Math.abs((int) (request1.getName().hashCode() * Math.random())));
+            request1.setId(uuid);
         }
         LOG.info(request1.getId());
         LOG.info(request1.getPriority());
