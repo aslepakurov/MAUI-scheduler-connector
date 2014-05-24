@@ -18,6 +18,14 @@
     </properties>
 
     <dependencies>
+
+        <!--Maiu-->
+        <dependency>
+            <groupId>unm</groupId>
+            <artifactId>maui</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!--Jersey-->
         <dependency>
             <groupId>com.sun.jersey</groupId>
