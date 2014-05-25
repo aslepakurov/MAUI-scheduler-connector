@@ -14,21 +14,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "request")
 @ToString
 @EqualsAndHashCode
-public abstract class Request {
+//TODO: a.romas: я его разабстрактил, для работы с БД, как доберешся до реализаций - делай обратно абстрактным
+public class Request {
 
     public static final double DEFAULT_PROTOCOL_VERSION = 0.5;
 
     @Id
+    private final String id;
+    private final String name;
     private final ClassID classID;
     private final String command;
     private final String user;
     private final long timeStamp;
-
-    protected Request(ClassID id, String user)  {
-        this.classID = id;
-        this.command = id.getCommand();
+    //TODO: same shit here
+    public Request(String id, String name, ClassID classId, String user)  {
+        this.id = id;
+        this.name = name;
+        this.classID = classId;
+        this.command = classId.getCommand();
         this.user = user;
         this.timeStamp = System.currentTimeMillis();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ClassID getClassID() {

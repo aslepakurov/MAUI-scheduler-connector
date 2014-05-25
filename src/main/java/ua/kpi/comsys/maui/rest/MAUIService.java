@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import ua.kpi.comsys.maui.domain.ClassID;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
@@ -84,30 +85,32 @@ public class MAUIService {
 
     @POST
     @Path("/postrequest")
-    public Response save(String request) {
+    public Response save(String jsonRequest) {
         String jsonResponse;
-        JsonObject json = (new Gson()).fromJson(request, JsonElement.class).getAsJsonObject().get("request").getAsJsonObject();
-        if (json == null) {
+        JsonElement jsonElement = (new Gson()).fromJson(jsonRequest, JsonElement.class).getAsJsonObject().get("request");
+        if (jsonElement == null) {
             return Response.status(500).entity("No JSON!").build();
         }
-        String type = json.get("type").getAsString();
-        if (!StringUtils.hasText(type)) {
-            return Response.status(500).entity("JSON doesn`t contain a type!").build();
+        JsonObject json = jsonElement.getAsJsonObject();
+        if (!json.has("type")) {
+            return Response.status(500).entity("No type provided!").build();
         }
-        //TODO: make default values abstract fabric
-        Request request1 = new Request();
-        //TODO: move it to resolver class
-        if (type.equalsIgnoreCase("simple")) {
-            String uuid = UUID.randomUUID().toString();
-            //TODO: Reflexion maybe?
-            request1.setName(json.get("requestName").getAsString());
-            request1.setPriority(json.get("priority").getAsString());
-            request1.setId(uuid);
+        if (!json.has("user")) {
+            return Response.status(500).entity("No user provided!").build();
         }
-        LOG.info(request1.getId());
-        LOG.info(request1.getPriority());
-        requestService.save(request1);
-        jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request1.getId() + "\"}", JsonElement.class).toString();
+        //TODO: bring type to work
+//        String type = json.get("type").getAsString();
+        String id = UUID.randomUUID().toString();
+        String user = json.get("user").getAsString();
+        String name = id;
+        if(json.has("name")){
+            name = json.get("name").getAsString();
+        }
+        Request request = new Request(id, name, ClassID.SUBMIT_JOB_REQUEST, user);
+        LOG.info(request.getId());
+        LOG.info(request.getName());
+        requestService.save(request);
+        jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }
 
