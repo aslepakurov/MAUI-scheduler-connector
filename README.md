@@ -1,6 +1,8 @@
 MAUI-scheduler-connector
 ========================
 
+Back-end location - barabashkastuff.com:1337/rest/maui/...
+
 Back-end part of scheduler UI.
 Based on Apache Servicemix 5.0.0 and MongoDB.
 
