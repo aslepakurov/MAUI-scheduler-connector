@@ -22,7 +22,7 @@ public class Request {
     @Id
     private String id;
     private String name;
-    private ClassID classID;
+    private ClassID classId;
     private String command;
     private String user;
     private long timeStamp;
@@ -30,7 +30,7 @@ public class Request {
     public Request(String id, String name, ClassID classId, String user)  {
         this.id = id;
         this.name = name;
-        this.classID = classId;
+        this.classId = classId;
         this.command = classId.getCommand();
         this.user = user;
         this.timeStamp = System.currentTimeMillis();
@@ -45,7 +45,7 @@ public class Request {
     }
 
     public ClassID getClassID() {
-        return classID;
+        return classId;
     }
 
     public String getCommand() {
@@ -68,8 +68,8 @@ public class Request {
         this.name = name;
     }
 
-    public void setClassID(ClassID classID) {
-        this.classID = classID;
+    public void setClassID(ClassID classId) {
+        this.classId = classId;
     }
 
     public void setCommand(String command) {
