@@ -33,6 +33,9 @@ public class Request {
     @Field("timeStamp")
     private long timeStamp;
 
+    public Request() {
+    }
+
     public Request(String id, String name, ClassID classId, String user)  {
         this.id = id;
         this.name = name;
