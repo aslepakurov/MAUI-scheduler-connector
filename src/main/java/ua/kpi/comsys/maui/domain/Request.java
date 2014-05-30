@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Request Class
@@ -21,12 +22,17 @@ public class Request {
 
     @Id
     private String id;
+    @Field("name")
     private String name;
+    @Field("classId")
     private ClassID classId;
+    @Field("command")
     private String command;
+    @Field("user")
     private String user;
+    @Field("timeStamp")
     private long timeStamp;
-    //TODO: same shit here
+
     public Request(String id, String name, ClassID classId, String user)  {
         this.id = id;
         this.name = name;
