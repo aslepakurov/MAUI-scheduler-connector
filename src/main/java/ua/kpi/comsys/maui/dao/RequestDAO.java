@@ -24,7 +24,9 @@ public class RequestDAO {
     private MongoOperations mongoTemplate;
 
     public Collection<Request> getRequests() {
-        List<Request> requests = mongoTemplate.findAll(Request.class);
+        Query query = new Query(Criteria.where("id").exists(true));
+        query.fields().include("id").include("name").include("user").include("timeStamp");
+        List<Request> requests = mongoTemplate.find(query, Request.class);
         logger.info(requests.size() + " requests found!");
         return requests;
     }
