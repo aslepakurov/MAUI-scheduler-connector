@@ -20,12 +20,12 @@ public class Request {
     public static final double DEFAULT_PROTOCOL_VERSION = 0.5;
 
     @Id
-    private final String id;
-    private final String name;
-    private final ClassID classID;
-    private final String command;
-    private final String user;
-    private final long timeStamp;
+    private String id;
+    private String name;
+    private ClassID classID;
+    private String command;
+    private String user;
+    private long timeStamp;
     //TODO: same shit here
     public Request(String id, String name, ClassID classId, String user)  {
         this.id = id;
@@ -58,5 +58,29 @@ public class Request {
 
     public long getTimeStamp() {
         return timeStamp;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setClassID(ClassID classID) {
+        this.classID = classID;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }
