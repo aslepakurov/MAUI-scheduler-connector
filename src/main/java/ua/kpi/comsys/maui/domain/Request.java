@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "request")
 @ToString
 @EqualsAndHashCode
-//TODO: a.romas: я его разабстрактил, для работы с БД, как доберешся до реализаций - делай обратно абстрактным
 public class Request {
 
     public static final double DEFAULT_PROTOCOL_VERSION = 0.5;

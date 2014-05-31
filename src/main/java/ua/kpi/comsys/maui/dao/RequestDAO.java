@@ -25,14 +25,16 @@ public class RequestDAO {
 
     public Collection<Request> getRequests() {
         Query query = new Query(Criteria.where("id").exists(true));
-        query.fields().include("id").include("name").include("user").include("timeStamp");
         List<Request> requests = mongoTemplate.find(query, Request.class);
         logger.info(requests.size() + " requests found!");
         return requests;
     }
 
-    public Request getRequest(String id) {
-        return mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class);
+    public Collection<Request> getRequests(Query query) {
+        query.fields().include("id").include("name").include("user").include("timeStamp");
+        List<Request> requests = mongoTemplate.find(query, Request.class);
+        logger.info(requests.size() + " requests found!");
+        return requests;
     }
 
     public void remove(String id) {
@@ -40,7 +42,7 @@ public class RequestDAO {
     }
 
     public void save(Request request) {
-        if(!collectionExist()){
+        if (!collectionExist()) {
             logger.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
         }
@@ -48,7 +50,7 @@ public class RequestDAO {
         logger.info("Request with id=" + request.getId() + " saved!");
     }
 
-    public boolean collectionExist(){
+    public boolean collectionExist() {
         return mongoTemplate.collectionExists(Request.class);
     }
 }

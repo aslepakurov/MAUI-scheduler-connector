@@ -1,6 +1,7 @@
 package ua.kpi.comsys.maui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.dao.RequestDAO;
@@ -21,11 +22,11 @@ public class RequestService {
     public boolean collectionExist(){return dao.collectionExist();}
 
     public Collection<Request> getRequests() {
-        return dao.getRequests();
+            return dao.getRequests();
     }
 
-    public Request getRequest(String id) {
-        return dao.getRequest(id);
+    public Collection<Request> getRequests(Query query) {
+        return dao.getRequests(query);
     }
 
     public void remove(String id) {dao.remove(id);}

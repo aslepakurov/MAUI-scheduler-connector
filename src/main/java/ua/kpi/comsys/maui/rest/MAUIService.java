@@ -4,16 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import ua.kpi.comsys.maui.domain.ClassID;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
@@ -45,9 +45,30 @@ public class MAUIService {
     }
 
     @GET
-    @Path("/requests")
-    public Response getRequests() {
-        Collection<Request> requests = requestService.getRequests();
+    @Path("/request")
+    public Response getRequests(@QueryParam("id") String id,
+                                @QueryParam("name") String name,
+                                @QueryParam("user") String user,
+                                @QueryParam("sort") String sort,
+                                @QueryParam("sortdir") String sortdir) {
+        Query query = new Query();
+        if (StringUtils.hasText(id)) {
+            query.addCriteria(Criteria.where("id").is(id));
+        }
+        if (StringUtils.hasText(name)) {
+            query.addCriteria(Criteria.where("name").is(name));
+        }
+        if (StringUtils.hasText(user)) {
+            query.addCriteria(Criteria.where("user").is(user));
+        }
+        if (!StringUtils.hasText(sort)) {
+            sort="name";
+        }
+        if (!StringUtils.hasText(sortdir)) {
+            sortdir="asc";
+        }
+        query.with(new Sort(sortdir.equalsIgnoreCase("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sort));
+        Collection<Request> requests = requestService.getRequests(query);
         if (requests == null) {
             return Response.status(500).build();
         }
@@ -66,22 +87,11 @@ public class MAUIService {
     }
 
     @GET
-    @Path("/request/{id}")
-    public Response getRequest(@PathParam("id") String id) {
-        Request request = requestService.getRequest(id);
-        if (request == null) {
-            return Response.status(500).build();
-        }
-        return Response.status(200).entity((new Gson()).toJson(request)).build();
-    }
-
-    @GET
     @Path("/remove/{id}")
     public Response removeRequest(@PathParam("id") String id) {
         requestService.remove(id);
         return Response.status(200).build();
     }
-
 
     @POST
     @Path("/postrequest")
