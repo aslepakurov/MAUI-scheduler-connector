@@ -65,6 +65,9 @@ public class MAUIService {
         if (!StringUtils.hasText(sort)) {
             sort="name";
         }
+        if(sort.equals("id")) {
+            sort="_id";
+        }
         if (!StringUtils.hasText(sortdir)) {
             sortdir="asc";
         }
