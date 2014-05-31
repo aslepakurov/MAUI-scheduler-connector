@@ -46,6 +46,7 @@ public class MAUIService {
 
     @GET
     @Path("/request")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRequests(@QueryParam("id") String id,
                                 @QueryParam("name") String name,
                                 @QueryParam("user") String user,
@@ -77,6 +78,7 @@ public class MAUIService {
 
     @GET
     @Path("/requestnames")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRequestNames() {
         Map<String, String> response = new HashMap<String, String>();
         Collection<Request> requests = requestService.getRequests();
@@ -95,6 +97,7 @@ public class MAUIService {
 
     @POST
     @Path("/postrequest")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response save(String jsonRequest) {
         String jsonResponse;
         JsonElement jsonElement = (new Gson()).fromJson(jsonRequest, JsonElement.class).getAsJsonObject().get("request");
