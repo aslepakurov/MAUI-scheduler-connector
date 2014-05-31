@@ -14,3 +14,4 @@ MAUI library
         mvn install:install-file -Dfile="maui-1.0.jar" -DgroupId=unm -DartifactId=maui -Dversion=1.0 -Dpackaging=jar
 
 Wiki -   https://github.com/HPC-Web/MAUI-scheduler-connector/wiki
+
