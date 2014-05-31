@@ -31,7 +31,7 @@ public class RequestDAO {
     }
 
     public Collection<Request> getRequests(Query query) {
-        query.fields().include("id").include("name").include("user").include("timeStamp");
+        query.fields().include("id").include("name").include("user_id").include("creation_date");
         List<Request> requests = mongoTemplate.find(query, Request.class);
         LOG.info(requests.size() + " requests found!");
         return requests;

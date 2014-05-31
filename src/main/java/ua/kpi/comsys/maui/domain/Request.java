@@ -77,7 +77,7 @@ public class Request {
         this.name = name;
     }
 
-    public void setClassId(ClassID classId) {
+    public void setClassID(ClassID classId) {
         this.classId = classId;
     }
 
@@ -85,11 +85,11 @@ public class Request {
         this.command = command;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser(String user_id) {
         this.user_id = user_id;
     }
 
-    public void setCreation_date(long creation_date) {
+    public void setTimeStamp(long creation_date) {
         this.creation_date = creation_date;
     }
 }
