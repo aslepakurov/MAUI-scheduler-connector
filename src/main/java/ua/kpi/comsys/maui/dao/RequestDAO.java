@@ -19,26 +19,27 @@ import java.util.logging.Logger;
  */
 @Component
 public class RequestDAO {
-    private static Logger logger = Logger.getLogger(RequestDAO.class.getName());
+    private static Logger LOG = Logger.getLogger(RequestDAO.class.getName());
     @Autowired
     private MongoOperations mongoTemplate;
 
     public Collection<Request> getRequests() {
         Query query = new Query(Criteria.where("id").exists(true));
         List<Request> requests = mongoTemplate.find(query, Request.class);
-        logger.info(requests.size() + " requests found!");
+        LOG.info(requests.size() + " requests found!");
         return requests;
     }
 
     public Collection<Request> getRequests(Query query) {
         query.fields().include("id").include("name").include("user").include("timeStamp");
         List<Request> requests = mongoTemplate.find(query, Request.class);
-        logger.info(requests.size() + " requests found!");
+        LOG.info(requests.size() + " requests found!");
         return requests;
     }
 
     public void remove(String id) {
         if (id.equals("all")) {
+            LOG.info("Removed everything :3");
             mongoTemplate.remove(Query.query(Criteria.where("id").exists(true)), Request.class);
         }else {
             mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
@@ -47,11 +48,11 @@ public class RequestDAO {
 
     public void save(Request request) {
         if (!collectionExist()) {
-            logger.info("Created collection!");
+            LOG.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
         }
         mongoTemplate.save(request);
-        logger.info("Request with id=" + request.getId() + " saved!");
+        LOG.info("Request with id=" + request.getId() + " saved!");
     }
 
     public boolean collectionExist() {

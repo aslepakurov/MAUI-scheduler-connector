@@ -117,7 +117,7 @@ public class MAUIService {
         //TODO: bring type to work
 //        String type = json.get("type").getAsString();
         String id = UUID.randomUUID().toString();
-        String user = json.get("user").getAsString();
+        String user = json.get("user_id").getAsString();
         String name = id;
         if(json.has("name")){
             name = json.get("name").getAsString();

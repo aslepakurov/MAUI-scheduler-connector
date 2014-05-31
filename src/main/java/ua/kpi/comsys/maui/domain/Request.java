@@ -27,9 +27,9 @@ public class Request {
     private ClassID classId;
     @Field("command")
     private String command;
-    @Field("user")
+    @Field("user_id")
     private String user;
-    @Field("timeStamp")
+    @Field("creation_date")
     private long timeStamp;
 
     public Request() {
