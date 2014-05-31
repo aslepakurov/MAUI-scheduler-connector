@@ -86,7 +86,7 @@ public class MAUIService {
         return Response.status(200).entity((new Gson()).toJson(requests)).build();
     }
 
-    @GET
+    @DELETE
     @Path("/remove/{id}")
     public Response removeRequest(@PathParam("id") String id) {
         try {

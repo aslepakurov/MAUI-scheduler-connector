@@ -38,7 +38,11 @@ public class RequestDAO {
     }
 
     public void remove(String id) {
-        mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
+        if (id.equals("all")) {
+            mongoTemplate.remove(Query.query(Criteria.where("id").exists(true)), Request.class);
+        }else {
+            mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
+        }
     }
 
     public void save(Request request) {
