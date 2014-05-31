@@ -46,7 +46,7 @@ public class MAUIService {
     }
 
     @GET
-    @Path("/request")
+    @Path("/requests")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequests(@QueryParam("id") String id,
                                 @QueryParam("name") String name,
