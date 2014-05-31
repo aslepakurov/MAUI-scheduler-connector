@@ -99,7 +99,7 @@ public class MAUIService {
     }
 
     @POST
-    @Path("/postrequest")
+    @Path("/request")
     @Produces(MediaType.APPLICATION_JSON)
     public Response save(String jsonRequest) {
         String jsonResponse;
