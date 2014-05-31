@@ -74,7 +74,7 @@ public class MAUIService {
             if (!StringUtils.hasText(sortdir)) {
                 sortdir="asc";
             }
-            query.with(new Sort(sortdir.equalsIgnoreCase("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sort));
+            query.with(new Sort(sortdir.equals("desc")?Sort.Direction.DESC:Sort.Direction.ASC, sort));
             requests = requestService.getRequests(query);
         } catch (Exception e) {
             LOG.log(Level.WARNING, e.getMessage());
@@ -84,24 +84,6 @@ public class MAUIService {
             return Response.status(500).build();
         }
         return Response.status(200).entity((new Gson()).toJson(requests)).build();
-    }
-
-    @GET
-    @Path("/requestnames")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getRequestNames() {
-        Map<String, String> response;
-        try {
-            response = new HashMap<String, String>();
-            Collection<Request> requests = requestService.getRequests();
-            for (Request request : requests) {
-                response.put(request.getName(), request.getId());
-            }
-        } catch (Exception e) {
-            LOG.log(Level.WARNING, e.getMessage());
-            return Response.status(500).build();
-        }
-        return Response.status(200).entity((new Gson()).toJson(response)).build();
     }
 
     @GET
