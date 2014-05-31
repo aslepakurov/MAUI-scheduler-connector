@@ -29,6 +29,7 @@ import java.util.logging.Logger;
  * @author Andrew S. Slepakurov
  * @version 28/03/2014
  */
+@SuppressWarnings("MethodParameterNamingConvention")
 @Path("/maui")
 @Component
 public class MAUIService {
@@ -50,7 +51,7 @@ public class MAUIService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequests(@QueryParam("id") String id,
                                 @QueryParam("name") String name,
-                                @QueryParam("user") String user,
+                                @QueryParam("user_id") String user_id,
                                 @QueryParam("sort") String sort,
                                 @QueryParam("sortdir") String sortdir) {
         Collection<Request> requests;
@@ -62,8 +63,8 @@ public class MAUIService {
             if (StringUtils.hasText(name)) {
                 query.addCriteria(Criteria.where("name").is(name));
             }
-            if (StringUtils.hasText(user)) {
-                query.addCriteria(Criteria.where("user").is(user));
+            if (StringUtils.hasText(user_id)) {
+                query.addCriteria(Criteria.where("user_id").is(user_id));
             }
             if (!StringUtils.hasText(sort)) {
                 sort="name";

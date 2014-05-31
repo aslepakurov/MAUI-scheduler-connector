@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * @author Andrew S. Slepakurov
  * @version 28/03/2014
  */
+@SuppressWarnings("InstanceVariableNamingConvention")
 @Document(collection = "request")
 @ToString
 @EqualsAndHashCode
@@ -28,9 +29,9 @@ public class Request {
     @Field("command")
     private String command;
     @Field("user_id")
-    private String user;
+    private String user_id;
     @Field("creation_date")
-    private long timeStamp;
+    private long creation_date;
 
     public Request() {
     }
@@ -40,8 +41,8 @@ public class Request {
         this.name = name;
         this.classId = classId;
         this.command = classId.getCommand();
-        this.user = user_id;
-        this.timeStamp = System.currentTimeMillis();
+        this.user_id = user_id;
+        this.creation_date = System.currentTimeMillis();
     }
 
     public String getId() {
@@ -61,11 +62,11 @@ public class Request {
     }
 
     public String getUser() {
-        return user;
+        return user_id;
     }
 
     public long getTimeStamp() {
-        return timeStamp;
+        return creation_date;
     }
 
     public void setId(String id) {
@@ -85,10 +86,10 @@ public class Request {
     }
 
     public void setUser(String user_id) {
-        this.user = user_id;
+        this.user_id = user_id;
     }
 
     public void setTimeStamp(long creation_date) {
-        this.timeStamp = creation_date;
+        this.creation_date = creation_date;
     }
 }
