@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -52,27 +53,33 @@ public class MAUIService {
                                 @QueryParam("user") String user,
                                 @QueryParam("sort") String sort,
                                 @QueryParam("sortdir") String sortdir) {
-        Query query = new Query();
-        if (StringUtils.hasText(id)) {
-            query.addCriteria(Criteria.where("id").is(id));
+        Collection<Request> requests = null;
+        try {
+            Query query = new Query();
+            if (StringUtils.hasText(id)) {
+                query.addCriteria(Criteria.where("id").is(id));
+            }
+            if (StringUtils.hasText(name)) {
+                query.addCriteria(Criteria.where("name").is(name));
+            }
+            if (StringUtils.hasText(user)) {
+                query.addCriteria(Criteria.where("user").is(user));
+            }
+            if (!StringUtils.hasText(sort)) {
+                sort="name";
+            }
+            if(sort.equals("id")) {
+                sort="_id";
+            }
+            if (!StringUtils.hasText(sortdir)) {
+                sortdir="asc";
+            }
+            query.with(new Sort(sortdir.equalsIgnoreCase("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sort));
+            requests = requestService.getRequests(query);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, e.getMessage());
+            return Response.status(500).build();
         }
-        if (StringUtils.hasText(name)) {
-            query.addCriteria(Criteria.where("name").is(name));
-        }
-        if (StringUtils.hasText(user)) {
-            query.addCriteria(Criteria.where("user").is(user));
-        }
-        if (!StringUtils.hasText(sort)) {
-            sort="name";
-        }
-        if(sort.equals("id")) {
-            sort="_id";
-        }
-        if (!StringUtils.hasText(sortdir)) {
-            sortdir="asc";
-        }
-        query.with(new Sort(sortdir.equalsIgnoreCase("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sort));
-        Collection<Request> requests = requestService.getRequests(query);
         if (requests == null) {
             return Response.status(500).build();
         }
@@ -83,10 +90,16 @@ public class MAUIService {
     @Path("/requestnames")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequestNames() {
-        Map<String, String> response = new HashMap<String, String>();
-        Collection<Request> requests = requestService.getRequests();
-        for (Request request : requests) {
-            response.put(request.getName(), request.getId());
+        Map<String, String> response = null;
+        try {
+            response = new HashMap<String, String>();
+            Collection<Request> requests = requestService.getRequests();
+            for (Request request : requests) {
+                response.put(request.getName(), request.getId());
+            }
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, e.getMessage());
+            return Response.status(500).build();
         }
         return Response.status(200).entity((new Gson()).toJson(response)).build();
     }
@@ -94,7 +107,12 @@ public class MAUIService {
     @GET
     @Path("/remove/{id}")
     public Response removeRequest(@PathParam("id") String id) {
-        requestService.remove(id);
+        try {
+            requestService.remove(id);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, e.getMessage());
+            return Response.status(500).build();
+        }
         return Response.status(200).build();
     }
 
