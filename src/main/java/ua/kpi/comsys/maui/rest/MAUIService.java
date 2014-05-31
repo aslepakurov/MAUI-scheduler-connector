@@ -53,7 +53,7 @@ public class MAUIService {
                                 @QueryParam("user") String user,
                                 @QueryParam("sort") String sort,
                                 @QueryParam("sortdir") String sortdir) {
-        Collection<Request> requests = null;
+        Collection<Request> requests;
         try {
             Query query = new Query();
             if (StringUtils.hasText(id)) {
@@ -90,7 +90,7 @@ public class MAUIService {
     @Path("/requestnames")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequestNames() {
-        Map<String, String> response = null;
+        Map<String, String> response;
         try {
             response = new HashMap<String, String>();
             Collection<Request> requests = requestService.getRequests();
