@@ -111,7 +111,7 @@ public class MAUIService {
         if (!json.has("type")) {
             return Response.status(500).entity("No type provided!").build();
         }
-        if (!json.has("user")) {
+        if (!json.has("user_id")) {
             return Response.status(500).entity("No user provided!").build();
         }
         //TODO: bring type to work
