@@ -35,12 +35,12 @@ public class Request {
     public Request() {
     }
 
-    public Request(String id, String name, ClassID classId, String user)  {
+    public Request(String id, String name, ClassID classId, String user_id)  {
         this.id = id;
         this.name = name;
         this.classId = classId;
         this.command = classId.getCommand();
-        this.user = user;
+        this.user = user_id;
         this.timeStamp = System.currentTimeMillis();
     }
 
@@ -84,11 +84,11 @@ public class Request {
         this.command = command;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser(String user_id) {
+        this.user = user_id;
     }
 
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimeStamp(long creation_date) {
+        this.timeStamp = creation_date;
     }
 }
