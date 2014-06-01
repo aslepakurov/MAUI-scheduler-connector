@@ -46,15 +46,20 @@ public class RequestDAO {
         if (id.equals("all")) {
             LOG.info("Removed everything :3");
             mongoTemplate.remove(Query.query(Criteria.where("id").exists(true)), Request.class);
-        }else {
+        } else {
             mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
         }
     }
 
+    //TODO: refactoring
     public void save(Request request) {
         if (!collectionExist()) {
             LOG.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
+        }
+        Request existingRequest = getRequest(request.getId());
+        if (existingRequest != null) {
+            mongoTemplate.remove(existingRequest);
         }
         mongoTemplate.save(request);
         LOG.info("Request with id=" + request.getId() + " saved!");

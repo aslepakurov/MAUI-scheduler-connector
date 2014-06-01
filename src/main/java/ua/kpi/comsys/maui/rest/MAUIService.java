@@ -67,15 +67,15 @@ public class MAUIService {
                 query.addCriteria(Criteria.where("user_id").is(user_id));
             }
             if (!StringUtils.hasText(sort)) {
-                sort="name";
+                sort = "name";
             }
-            if(sort.equals("id")) {
-                sort="_id";
+            if (sort.equals("id")) {
+                sort = "_id";
             }
             if (!StringUtils.hasText(sortdir)) {
-                sortdir="asc";
+                sortdir = "asc";
             }
-            query.with(new Sort(sortdir.equals("desc")?Sort.Direction.DESC:Sort.Direction.ASC, sort));
+            query.with(new Sort(sortdir.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, sort));
             requests = requestService.getRequests(query);
         } catch (Exception e) {
             LOG.log(Level.WARNING, e.getMessage());
@@ -99,7 +99,7 @@ public class MAUIService {
         return Response.status(200).build();
     }
 
-    //TODO: needs refactoring
+    //TODO: massive refactoring!
     @POST
     @Path("/request")
     @Produces(MediaType.APPLICATION_JSON)
@@ -128,15 +128,15 @@ public class MAUIService {
         if (json.has("priority")) {
             priority = json.get("priority").getAsInt();
         }
-        if(json.has("name")){
+        if (json.has("name")) {
             name = json.get("name").getAsString();
         }
         Request request;
-        if(json.has("id")) {
+        if (json.has("id")) {
             request = requestService.getRequest(json.get("id").getAsString());
-        }else {
+        } else {
             String id = UUID.randomUUID().toString();
-            request = new Request(id, StringUtils.hasText(name)?name:id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
+            request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
         }
         LOG.info(request.getId());
         LOG.info(request.getName());
