@@ -24,21 +24,27 @@ public class Request {
     private String id;
     @Field("name")
     private String name;
+    @Field("priority")
+    private int priority;
     @Field("classId")
     private ClassID classId;
     @Field("command")
     private String command;
     @Field("user_id")
     private String user_id;
+    @Field("email")
+    private String email;
     @Field("creation_date")
     private long creation_date;
 
     public Request() {
     }
 
-    public Request(String id, String name, ClassID classId, String user_id)  {
+    public Request(String id, String name, ClassID classId, String user_id, String email, int priority)  {
         this.id = id;
         this.name = name;
+        this.email = email;
+        this.priority = priority;
         this.classId = classId;
         this.command = classId.getCommand();
         this.user_id = user_id;
@@ -63,6 +69,14 @@ public class Request {
 
     public String getUser() {
         return user_id;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public long getTimeStamp() {
@@ -91,5 +105,13 @@ public class Request {
 
     public void setTimeStamp(long creation_date) {
         this.creation_date = creation_date;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

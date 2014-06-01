@@ -21,6 +21,8 @@ public class RequestService {
 
     public boolean collectionExist(){return dao.collectionExist();}
 
+    public Request getRequest(String id) { return dao.getRequest(id);}
+
     public Collection<Request> getRequests() {
             return dao.getRequests();
     }

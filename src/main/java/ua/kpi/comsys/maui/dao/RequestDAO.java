@@ -23,6 +23,11 @@ public class RequestDAO {
     @Autowired
     private MongoOperations mongoTemplate;
 
+    public Request getRequest(String id) {
+        Query query = new Query(Criteria.where("id").is(id));
+        return mongoTemplate.findOne(query, Request.class);
+    }
+
     public Collection<Request> getRequests() {
         Query query = new Query(Criteria.where("id").exists(true));
         List<Request> requests = mongoTemplate.find(query, Request.class);

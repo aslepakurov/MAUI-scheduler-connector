@@ -99,6 +99,7 @@ public class MAUIService {
         return Response.status(200).build();
     }
 
+    //TODO: needs refactoring
     @POST
     @Path("/request")
     @Produces(MediaType.APPLICATION_JSON)
@@ -117,13 +118,26 @@ public class MAUIService {
         }
         //TODO: bring type to work
 //        String type = json.get("type").getAsString();
-        String id = UUID.randomUUID().toString();
         String user = json.get("user_id").getAsString();
-        String name = id;
+        int priority = 0;
+        String name = "";
+        String email = "";
+        if (json.has("email")) {
+            email = json.get("email").getAsString();
+        }
+        if (json.has("priority")) {
+            priority = json.get("priority").getAsInt();
+        }
         if(json.has("name")){
             name = json.get("name").getAsString();
         }
-        Request request = new Request(id, name, ClassID.SUBMIT_JOB_REQUEST, user);
+        Request request;
+        if(json.has("id")) {
+            request = requestService.getRequest(json.get("id").getAsString());
+        }else {
+            String id = UUID.randomUUID().toString();
+            request = new Request(id, StringUtils.hasText(name)?name:id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
+        }
         LOG.info(request.getId());
         LOG.info(request.getName());
         requestService.save(request);
