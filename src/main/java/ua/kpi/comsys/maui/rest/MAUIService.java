@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 @Path("/maui")
 @Component
 public class MAUIService {
-    private static final Logger logger = Logger.getLogger(MAUIService.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
 //    @Autowired
@@ -44,12 +44,15 @@ public class MAUIService {
         return Response.status(200).entity(result).build();
     }
 
+    //TODO: reconfigure search, maybe? (query = .... , not bunch of parameters)
     @GET
     @Path("/requests")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequests(@QueryParam("id") String id,
                                 @QueryParam("name") String name,
                                 @QueryParam("user_id") String user_id,
+                                @QueryParam("priority") String priority,
+                                @QueryParam("status") String status,
                                 @QueryParam("sort") String sort,
                                 @QueryParam("sortdir") String sortdir) {
         Collection<Request> requests;
@@ -64,6 +67,12 @@ public class MAUIService {
             if (StringUtils.hasText(user_id)) {
                 query.addCriteria(Criteria.where("user_id").is(user_id));
             }
+            if (StringUtils.hasText(priority)) {
+                query.addCriteria(Criteria.where("priority").is(Integer.getInteger(priority)));
+            }
+            if(StringUtils.hasText(status)) {
+                query.addCriteria(Criteria.where("status").is(status.toUpperCase()));
+            }
             if (!StringUtils.hasText(sort)) {
                 sort = "name";
             }
@@ -76,7 +85,7 @@ public class MAUIService {
             query.with(new Sort(sortdir.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, sort));
             requests = requestService.getRequests(query);
         } catch (Exception e) {
-            logger.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.WARNING, e.getMessage());
             return Response.status(500).build();
         }
         if (requests == null) {
@@ -91,7 +100,7 @@ public class MAUIService {
         try {
             requestService.remove(id);
         } catch (Exception e) {
-            logger.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.WARNING, e.getMessage());
             return Response.status(500).build();
         }
         return Response.status(200).build();
@@ -145,8 +154,8 @@ public class MAUIService {
             String id = UUID.randomUUID().toString();
             request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
         }
-        logger.info(request.getId());
-        logger.info(request.getName());
+        LOGGER.info(request.getId());
+        LOGGER.info(request.getName());
         requestService.save(request);
         jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
