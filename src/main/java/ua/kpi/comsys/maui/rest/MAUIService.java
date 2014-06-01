@@ -134,6 +134,15 @@ public class MAUIService {
         Request request;
         if (json.has("id")) {
             request = requestService.getRequest(json.get("id").getAsString());
+            if (StringUtils.hasText(name)) {
+                request.setName(name);
+            }
+            if (StringUtils.hasText(email)) {
+                request.setEmail(email);
+            }
+            if (priority != 0) {
+                request.setPriority(priority);
+            }
         } else {
             String id = UUID.randomUUID().toString();
             request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
