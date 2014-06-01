@@ -62,7 +62,7 @@ public class MAUIService {
                 query.addCriteria(Criteria.where("id").is(id));
             }
             if (StringUtils.hasText(name)) {
-                query.addCriteria(Criteria.where("name").is(name));
+                query.addCriteria(Criteria.where("name").regex(name));
             }
             if (StringUtils.hasText(user_id)) {
                 query.addCriteria(Criteria.where("user_id").is(user_id));
