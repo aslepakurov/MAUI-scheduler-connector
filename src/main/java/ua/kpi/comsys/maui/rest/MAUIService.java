@@ -17,8 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +31,7 @@ import java.util.logging.Logger;
 @Path("/maui")
 @Component
 public class MAUIService {
-    private static final Logger LOG = Logger.getLogger(MAUIService.class.getName());
+    private static final Logger logger = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
 //    @Autowired
@@ -78,7 +76,7 @@ public class MAUIService {
             query.with(new Sort(sortdir.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC, sort));
             requests = requestService.getRequests(query);
         } catch (Exception e) {
-            LOG.log(Level.WARNING, e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
             return Response.status(500).build();
         }
         if (requests == null) {
@@ -93,7 +91,7 @@ public class MAUIService {
         try {
             requestService.remove(id);
         } catch (Exception e) {
-            LOG.log(Level.WARNING, e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
             return Response.status(500).build();
         }
         return Response.status(200).build();
@@ -147,8 +145,8 @@ public class MAUIService {
             String id = UUID.randomUUID().toString();
             request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
         }
-        LOG.info(request.getId());
-        LOG.info(request.getName());
+        logger.info(request.getId());
+        logger.info(request.getName());
         requestService.save(request);
         jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();

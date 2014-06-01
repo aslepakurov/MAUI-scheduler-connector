@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 @Component
 public class RequestDAO {
-    private static Logger LOG = Logger.getLogger(RequestDAO.class.getName());
+    private static Logger logger = Logger.getLogger(RequestDAO.class.getName());
     @Autowired
     private MongoOperations mongoTemplate;
 
@@ -31,20 +31,20 @@ public class RequestDAO {
     public Collection<Request> getRequests() {
         Query query = new Query(Criteria.where("id").exists(true));
         List<Request> requests = mongoTemplate.find(query, Request.class);
-        LOG.info(requests.size() + " requests found!");
+        logger.info(requests.size() + " requests found!");
         return requests;
     }
 
     public Collection<Request> getRequests(Query query) {
-        query.fields().include("id").include("name").include("priority").include("user_id").include("creation_date");
+        query.fields().include("id").include("name").include("priority").include("user_id").include("creation_date").include("status");
         List<Request> requests = mongoTemplate.find(query, Request.class);
-        LOG.info(requests.size() + " requests found!");
+        logger.info(requests.size() + " requests found!");
         return requests;
     }
 
     public void remove(String id) {
         if (id.equals("all")) {
-            LOG.info("Removed everything :3");
+            logger.info("Removed everything :3");
             mongoTemplate.remove(Query.query(Criteria.where("id").exists(true)), Request.class);
         } else {
             mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
@@ -54,7 +54,7 @@ public class RequestDAO {
     //TODO: refactoring
     public void save(Request request) {
         if (!collectionExist()) {
-            LOG.info("Created collection!");
+            logger.info("Created collection!");
             mongoTemplate.createCollection(Request.class);
         }
         Request existingRequest = getRequest(request.getId());
@@ -62,7 +62,7 @@ public class RequestDAO {
             mongoTemplate.remove(existingRequest);
         }
         mongoTemplate.save(request);
-        LOG.info("Request with id=" + request.getId() + " saved!");
+        logger.info("Request with id=" + request.getId() + " saved!");
     }
 
     public boolean collectionExist() {
