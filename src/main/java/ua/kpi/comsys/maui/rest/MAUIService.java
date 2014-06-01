@@ -68,7 +68,7 @@ public class MAUIService {
                 query.addCriteria(Criteria.where("user_id").is(user_id));
             }
             if (StringUtils.hasText(priority)) {
-                query.addCriteria(Criteria.where("priority").is(Integer.getInteger(priority)));
+                query.addCriteria(Criteria.where("priority").is(priority));
             }
             if(StringUtils.hasText(status)) {
                 query.addCriteria(Criteria.where("status").is(status.toUpperCase()));
