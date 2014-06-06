@@ -160,7 +160,7 @@ public class MAUIService {
         } else {
             String id = UUID.randomUUID().toString();
             request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
-            if (StringUtils.hasText(description)) {
+            if (!StringUtils.hasText(description)) {
                 description = String.format("Name: %s", name);
             }
             request.setDescription(description);
