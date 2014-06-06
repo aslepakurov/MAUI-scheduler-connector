@@ -131,7 +131,7 @@ public class MAUIService {
         } else {
             request = defaultFabric.getDummy(type);
         }
-        request.setName(json.get("user_id").getAsString());
+        request.setUser(json.get("user_id").getAsString());
         if (!json.has("name") && request.getName()==null) {
             request.setName(request.getId());
         } else {
