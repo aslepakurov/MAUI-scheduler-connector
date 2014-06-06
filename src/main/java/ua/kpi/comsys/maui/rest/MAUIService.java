@@ -70,7 +70,7 @@ public class MAUIService {
             if (StringUtils.hasText(priority)) {
                 query.addCriteria(Criteria.where("priority").is(Integer.parseInt(priority)));
             }
-            if(StringUtils.hasText(status)) {
+            if (StringUtils.hasText(status)) {
                 query.addCriteria(Criteria.where("status").is(status.toUpperCase()));
             }
             if (!StringUtils.hasText(sort)) {
@@ -129,6 +129,7 @@ public class MAUIService {
         int priority = 0;
         String name = "";
         String email = "";
+        String description = "";
         if (json.has("email")) {
             email = json.get("email").getAsString();
         }
@@ -137,6 +138,9 @@ public class MAUIService {
         }
         if (json.has("name")) {
             name = json.get("name").getAsString();
+        }
+        if (json.has("description")) {
+            description = json.get("description").getAsString();
         }
         Request request;
         if (json.has("id")) {
@@ -147,12 +151,19 @@ public class MAUIService {
             if (StringUtils.hasText(email)) {
                 request.setEmail(email);
             }
+            if (StringUtils.hasText(description)) {
+                request.setDescription(description);
+            }
             if (priority != 0) {
                 request.setPriority(priority);
             }
         } else {
             String id = UUID.randomUUID().toString();
             request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
+            if (StringUtils.hasText(description)) {
+                description = String.format("Name: %s", name);
+            }
+            request.setDescription(description);
         }
         LOGGER.info(request.getId());
         LOGGER.info(request.getName());

@@ -31,6 +31,8 @@ public class Request {
     private Status status;
     @Field("classId")
     private ClassID classId;
+    @Field("description")
+    private String description;
     @Field("command")
     private String command;
     @Field("user_id")
@@ -91,6 +93,10 @@ public class Request {
         return status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -125,5 +131,9 @@ public class Request {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
