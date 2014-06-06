@@ -19,19 +19,29 @@ public class RequestService {
     @Autowired
     private RequestDAO dao;
 
-    public boolean collectionExist(){return dao.collectionExist();}
+    public boolean collectionExist() {
+        return dao.collectionExist();
+    }
 
-    public Request getRequest(String id) { return dao.getRequest(id);}
+    public boolean requestExists(String id) {
+        return dao.requestExists(id);
+    }
+
+    public Request getRequest(String id) {
+        return dao.getRequest(id);
+    }
 
     public Collection<Request> getRequests() {
-            return dao.getRequests();
+        return dao.getRequests();
     }
 
     public Collection<Request> getRequests(Query query) {
         return dao.getRequests(query);
     }
 
-    public void remove(String id) {dao.remove(id);}
+    public void remove(String id) {
+        dao.remove(id);
+    }
 
     public void save(Request request) {
         dao.save(request);

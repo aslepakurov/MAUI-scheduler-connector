@@ -41,19 +41,24 @@ public class Request {
     private String email;
     @Field("creation_date")
     private long creation_date;
+    @Field("cpu")
+    private int cpu;
+    @Field("ram")
+    private int ram;
+    @Field("node")
+    private int node;
+    @Field("walltime")
+    private String walltime;
+
 
     public Request() {
     }
 
-    public Request(String id, String name, ClassID classId, String user_id, String email, int priority)  {
+    public Request(String id, ClassID classId)  {
         this.id = id;
-        this.name = name;
         this.status = Status.CREATED;
-        this.email = email;
-        this.priority = priority;
         this.classId = classId;
         this.command = classId.getCommand();
-        this.user_id = user_id;
         this.creation_date = System.currentTimeMillis();
     }
 
@@ -97,6 +102,22 @@ public class Request {
         return description;
     }
 
+    public int getCpu() {
+        return cpu;
+    }
+
+    public int getRam() {
+        return ram;
+    }
+
+    public int getNode() {
+        return node;
+    }
+
+    public String getWalltime() {
+        return walltime;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -135,5 +156,21 @@ public class Request {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCpu(int cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setRam(int ram) {
+        this.ram = ram;
+    }
+
+    public void setNode(int node) {
+        this.node = node;
+    }
+
+    public void setWalltime(String walltime) {
+        this.walltime = walltime;
     }
 }

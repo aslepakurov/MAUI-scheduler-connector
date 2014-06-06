@@ -44,10 +44,11 @@ public class RequestDAO {
 
     public void remove(String id) {
         if (id.equals("all")) {
-            LOGGER.info("Removed everything :3");
             mongoTemplate.remove(Query.query(Criteria.where("id").exists(true)), Request.class);
+            LOGGER.info("Removed everything :3");
         } else {
             mongoTemplate.remove(mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Request.class));
+            LOGGER.info("Request with id = " + id + " removed!");
         }
     }
 
@@ -62,7 +63,12 @@ public class RequestDAO {
             mongoTemplate.remove(existingRequest);
         }
         mongoTemplate.save(request);
-        LOGGER.info("Request with id=" + request.getId() + " saved!");
+        LOGGER.info("Request: " + request);
+    }
+
+    public boolean requestExists(String id) {
+        Request request = mongoTemplate.findOne(Query.query(Criteria.where("id").is(id)), Request.class);
+        return request != null;
     }
 
     public boolean collectionExist() {

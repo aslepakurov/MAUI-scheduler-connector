@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import ua.kpi.comsys.maui.domain.ClassID;
+import ua.kpi.comsys.maui.domain.DefaultFabric;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.service.RequestService;
 
@@ -34,8 +35,8 @@ public class MAUIService {
     private static final Logger LOGGER = Logger.getLogger(MAUIService.class.getName());
     @Autowired
     private RequestService requestService;
-//    @Autowired
-//    private DefaultFabric defaultFabric;
+    @Autowired
+    private DefaultFabric defaultFabric;
 
     @GET
     @Path("/status")
@@ -106,7 +107,7 @@ public class MAUIService {
         return Response.status(200).build();
     }
 
-    //TODO: massive refactoring!
+
     @POST
     @Path("/request")
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,56 +121,47 @@ public class MAUIService {
         if (!json.has("type")) {
             return Response.status(500).entity("No type provided!").build();
         }
+        String type = json.get("type").getAsString();
         if (!json.has("user_id")) {
             return Response.status(500).entity("No user provided!").build();
         }
-        //TODO: bring type to work
-//        String type = json.get("type").getAsString();
-        String user = json.get("user_id").getAsString();
-        int priority = 0;
-        String name = "";
-        String email = "";
-        String description = "";
-        if (json.has("email")) {
-            email = json.get("email").getAsString();
+        Request request;
+        if(json.has("id")) {
+            request = requestService.getRequest(json.get("id").getAsString());
+        } else {
+            request = defaultFabric.getDummy(type);
+        }
+        request.setName(json.get("user_id").getAsString());
+        if (!json.has("name") && request.getName()==null) {
+            request.setName(request.getId());
+        } else {
+            request.setName(json.get("name").getAsString());
         }
         if (json.has("priority")) {
-            priority = json.get("priority").getAsInt();
+            request.setPriority(json.get("priority").getAsInt());
         }
-        if (json.has("name")) {
-            name = json.get("name").getAsString();
+        if (json.has("email")) {
+            request.setEmail(json.get("email").getAsString());
+        }
+        if (json.has("cpu")) {
+            request.setCpu(json.get("cpu").getAsInt());
+        }
+        if (json.has("ram")) {
+            request.setRam(json.get("ram").getAsInt());
+        }
+        if (json.has("node")) {
+            request.setNode(json.get("node").getAsInt());
+        }
+        if (json.has("walltime")) {
+            request.setWalltime(json.get("walltime").getAsString());
         }
         if (json.has("description")) {
-            description = json.get("description").getAsString();
-        }
-        Request request;
-        if (json.has("id")) {
-            request = requestService.getRequest(json.get("id").getAsString());
-            if (StringUtils.hasText(name)) {
-                request.setName(name);
-            }
-            if (StringUtils.hasText(email)) {
-                request.setEmail(email);
-            }
-            if (StringUtils.hasText(description)) {
-                request.setDescription(description);
-            }
-            if (priority != 0) {
-                request.setPriority(priority);
-            }
+            request.setDescription(json.get("description").getAsString());
         } else {
-            String id = UUID.randomUUID().toString();
-            request = new Request(id, StringUtils.hasText(name) ? name : id, ClassID.SUBMIT_JOB_REQUEST, user, email, priority);
-            if (!StringUtils.hasText(description)) {
-                description = String.format("Name: %s", name);
-            }
-            request.setDescription(description);
+            request.setDescription(String.format("Name: %s", request.getName()));
         }
-        LOGGER.info(request.getId());
-        LOGGER.info(request.getName());
         requestService.save(request);
         jsonResponse = (new Gson()).fromJson("{\"id\":\"" + request.getId() + "\"}", JsonElement.class).toString();
         return Response.ok(jsonResponse).type(MediaType.APPLICATION_JSON).build();
     }
-
 }
