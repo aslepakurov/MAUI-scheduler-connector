@@ -30,12 +30,8 @@ public class Request {
     private int priority;
     @Field("status")
     private Status status;
-    @Field("classId")
-    private ClassID classId;
     @Field("description")
     private String description;
-    @Field("command")
-    private String command;
     @Field("user_id")
     private String user_id;
     @Field("email")
@@ -66,11 +62,9 @@ public class Request {
     public Request() {
     }
 
-    public Request(String id, ClassID classId)  {
+    public Request(String id)  {
         this.id = id;
         this.status = Status.CREATED;
-        this.classId = classId;
-        this.command = classId.getCommand();
         this.creation_date = System.currentTimeMillis();
     }
 
@@ -80,14 +74,6 @@ public class Request {
 
     public String getName() {
         return name;
-    }
-
-    public ClassID getClassID() {
-        return classId;
-    }
-
-    public String getCommand() {
-        return command;
     }
 
     public String getUser() {
@@ -160,14 +146,6 @@ public class Request {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setClassID(ClassID classId) {
-        this.classId = classId;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
     }
 
     public void setUser(String user_id) {

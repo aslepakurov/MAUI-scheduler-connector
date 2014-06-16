@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import ua.kpi.comsys.maui.domain.ClassID;
 import ua.kpi.comsys.maui.domain.DefaultFabric;
 import ua.kpi.comsys.maui.domain.Request;
 import ua.kpi.comsys.maui.service.RequestService;
@@ -19,7 +18,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -126,6 +124,9 @@ public class MAUIService {
             request = requestService.getRequest(json.get("id").getAsString());
         } else {
             request = defaultFabric.getDummy();
+        }
+        if (request == null) {
+            return Response.status(500).entity("No request with provided id exists!").build();
         }
         request.setUser(json.get("user_id").getAsString());
         if (!json.has("name") && request.getName() == null) {

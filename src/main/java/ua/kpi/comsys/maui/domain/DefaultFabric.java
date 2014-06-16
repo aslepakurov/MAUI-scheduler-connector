@@ -25,14 +25,12 @@ public class DefaultFabric {
     @Value("${default.storage}")
     private int storage;
 
-    public static final ClassID SUBMIT_JOB_REQUEST = ClassID.SUBMIT_JOB_REQUEST;
-
     public DefaultFabric() {
     }
 
     public Request getDummy() {
         String id = UUID.randomUUID().toString();
-        Request request = new Request(id, SUBMIT_JOB_REQUEST);
+        Request request = new Request(id);
         request.setPriority(priority);
         request.setCpu(cpu);
         request.setMemory(memory);

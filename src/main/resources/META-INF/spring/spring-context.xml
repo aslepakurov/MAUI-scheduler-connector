@@ -20,11 +20,9 @@
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
-            <list>
-                <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg value="etc/maui.properties"/>
-                </bean>
-            </list>
+            <bean class="org.springframework.core.io.FileSystemResource">
+                <constructor-arg value="etc/maui.properties"/>
+            </bean>
         </property>
     </bean>
 
