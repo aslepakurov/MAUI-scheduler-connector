@@ -1,0 +1,113 @@
+<!--
+(c) HPC-Web
+2014-06-17
+Create MAUI request by SOAP protocol
+
+Online WSDL 1.1 SOAP generator 0.2
+Julien Blitte
+ -->
+<definitions name="Create MAUI request by SOAP protocol"
+             targetNamespace="ua.kpi.comsys.maui.wsdl">
+    <!-- definition of datatypes -->
+    <types>
+        <schema targetNamespace="ua.kpi.comsys.maui.xsd">
+            <element name="name">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="priority">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="description">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="email">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="cpu">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="memory">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="storage">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="node">
+                <complexType>
+                    <all>
+                        <element name="value" type="int"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="input_arguments">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="bash">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="hook_start">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+            <element name="hook_end">
+                <complexType>
+                    <all>
+                        <element name="value" type="string"/>
+                    </all>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+    <!-- response messages --><!-- request messages --><!-- server's services -->
+    <portType name="POST maui request">
+    </portType>
+    <!-- server encoding -->
+    <binding name="POST maui request_webservices" type="tns:POST maui request">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    </binding>
+    <!-- access to service provider -->
+    <service name="MAUI-scheduler-connector">
+        <port name="MAUI-scheduler-connector_0" binding="POST maui request_webservices">
+            <soap:address location="http://0.0.0.0:7777/request"/>
+        </port>
+    </service>
+</definitions>
