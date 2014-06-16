@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Map;
+
 /**
  * Request Class
  *
@@ -20,7 +22,6 @@ public class Request {
 
     public static final double DEFAULT_PROTOCOL_VERSION = 0.5;
 
-    //TODO: Map fields in camelCase, return and insert in under_score
     @Id
     private String id;
     @Field("name")
@@ -43,13 +44,24 @@ public class Request {
     private long creation_date;
     @Field("cpu")
     private int cpu;
-    @Field("ram")
-    private int ram;
+    @Field("memory")
+    private int memory;
+    @Field("storage")
+    private int storage;
     @Field("node")
     private int node;
     @Field("walltime")
     private String walltime;
-
+    @Field("env")
+    private Map<String, String> env;
+    @Field("input_arguments")
+    private String input_arguments;
+    @Field("bash")
+    private String bash;
+    @Field("hook_start")
+    private String hook_start;
+    @Field("hook_end")
+    private String hook_end;
 
     public Request() {
     }
@@ -106,8 +118,8 @@ public class Request {
         return cpu;
     }
 
-    public int getRam() {
-        return ram;
+    public int getMemory() {
+        return memory;
     }
 
     public int getNode() {
@@ -116,6 +128,30 @@ public class Request {
 
     public String getWalltime() {
         return walltime;
+    }
+
+    public Map<String, String> getEnv() {
+        return env;
+    }
+
+    public String getInputArguments() {
+        return input_arguments;
+    }
+
+    public int getStorage() {
+        return storage;
+    }
+
+    public String getBash() {
+        return bash;
+    }
+
+    public String getHookStart() {
+        return hook_start;
+    }
+
+    public String getHookEnd() {
+        return hook_end;
     }
 
     public void setId(String id) {
@@ -162,8 +198,8 @@ public class Request {
         this.cpu = cpu;
     }
 
-    public void setRam(int ram) {
-        this.ram = ram;
+    public void setMemory(int memory) {
+        this.memory = memory;
     }
 
     public void setNode(int node) {
@@ -172,5 +208,29 @@ public class Request {
 
     public void setWalltime(String walltime) {
         this.walltime = walltime;
+    }
+
+    public void setEnv(Map<String, String> env) {
+        this.env = env;
+    }
+
+    public void setInputArguments(String input_arguments) {
+        this.input_arguments = input_arguments;
+    }
+
+    public void setStorage(int storage) {
+        this.storage = storage;
+    }
+
+    public void setBash(String bash) {
+        this.bash = bash;
+    }
+
+    public void setHookStart(String hook_start) {
+        this.hook_start = hook_start;
+    }
+
+    public void setHookEnd(String hook_end) {
+        this.hook_end = hook_end;
     }
 }

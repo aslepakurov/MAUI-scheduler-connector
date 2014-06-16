@@ -18,23 +18,26 @@ public class DefaultFabric {
     private int priority;
     @Value("${default.cpu}")
     private int cpu;
-    @Value("${default.ram}")
-    private int ram;
+    @Value("${default.memory}")
+    private int memory;
     @Value("${default.node}")
     private int node;
+    @Value("${default.storage}")
+    private int storage;
 
     public static final ClassID SUBMIT_JOB_REQUEST = ClassID.SUBMIT_JOB_REQUEST;
 
     public DefaultFabric() {
     }
 
-    public Request getDummy(String type) {
+    public Request getDummy() {
         String id = UUID.randomUUID().toString();
         Request request = new Request(id, SUBMIT_JOB_REQUEST);
         request.setPriority(priority);
         request.setCpu(cpu);
-        request.setRam(ram);
+        request.setMemory(memory);
         request.setNode(node);
+        request.setStorage(storage);
         return request;
     }
 }

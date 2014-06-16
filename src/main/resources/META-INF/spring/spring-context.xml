@@ -22,13 +22,7 @@
         <property name="locations">
             <list>
                 <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg value="etc/rest.properties"/>
-                </bean>
-                <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg value="etc/db.properties"/>
-                </bean>
-                <bean class="org.springframework.core.io.FileSystemResource">
-                    <constructor-arg value="etc/parameters/default.properties"/>
+                    <constructor-arg value="etc/maui.properties"/>
                 </bean>
             </list>
         </property>

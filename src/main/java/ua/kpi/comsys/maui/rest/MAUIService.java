@@ -1,3 +1,4 @@
+
 package ua.kpi.comsys.maui.rest;
 
 import com.google.gson.Gson;
@@ -45,7 +46,6 @@ public class MAUIService {
         return Response.status(200).entity(result).build();
     }
 
-    //TODO: reconfigure search, maybe? (query = .... , not bunch of parameters)
     @GET
     @Path("/requests")
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,21 +118,17 @@ public class MAUIService {
             return Response.status(500).entity("No JSON!").build();
         }
         JsonObject json = jsonElement.getAsJsonObject();
-        if (!json.has("type")) {
-            return Response.status(500).entity("No type provided!").build();
-        }
-        String type = json.get("type").getAsString();
         if (!json.has("user_id")) {
             return Response.status(500).entity("No user provided!").build();
         }
         Request request;
-        if(json.has("id")) {
+        if (json.has("id")) {
             request = requestService.getRequest(json.get("id").getAsString());
         } else {
-            request = defaultFabric.getDummy(type);
+            request = defaultFabric.getDummy();
         }
         request.setUser(json.get("user_id").getAsString());
-        if (!json.has("name") && request.getName()==null) {
+        if (!json.has("name") && request.getName() == null) {
             request.setName(request.getId());
         } else {
             request.setName(json.get("name").getAsString());
@@ -146,14 +142,35 @@ public class MAUIService {
         if (json.has("cpu")) {
             request.setCpu(json.get("cpu").getAsInt());
         }
-        if (json.has("ram")) {
-            request.setRam(json.get("ram").getAsInt());
+        if (json.has("memory")) {
+            request.setMemory(json.get("memory").getAsInt());
+        }
+        if (json.has("storage")) {
+            request.setMemory(json.get("storage").getAsInt());
         }
         if (json.has("node")) {
             request.setNode(json.get("node").getAsInt());
         }
         if (json.has("walltime")) {
             request.setWalltime(json.get("walltime").getAsString());
+        }
+        if (json.has("storage")) {
+            request.setStorage(json.get("storage").getAsInt());
+        }
+        if (json.has("input_arguments")) {
+            request.setInputArguments(json.get("input_arguments").getAsString());
+        }
+        if (json.has("bash")) {
+            request.setBash(json.get("bash").getAsString());
+        }
+        if (json.has("file_url")) {
+            request.setBash(json.get("file_url").getAsString());
+        }
+        if (json.has("hook_start")) {
+            request.setHookStart(json.get("hook_start").getAsString());
+        }
+        if (json.has("hook_end")) {
+            request.setHookEnd(json.get("hook_end").getAsString());
         }
         if (json.has("description")) {
             request.setDescription(json.get("description").getAsString());
