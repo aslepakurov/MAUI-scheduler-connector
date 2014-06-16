@@ -20,19 +20,11 @@
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
-            <bean class="org.springframework.core.io.FileSystemResource">
-                <constructor-arg value="etc/maui.properties"/>
-            </bean>
+                <bean class="org.springframework.core.io.FileSystemResource">
+                    <constructor-arg value="etc/maui.properties"/>
+                </bean>
         </property>
     </bean>
-
-    <cxf:cxfEndpoint id="maui.proxy" address="http://0.0.0.0:7777/request"
-                     endpointName="s:MAUI-scheduler-connector_0" serviceName="s:MAUI-scheduler-connector"
-                     wsdlURL="wsdl/maui/Request.wsdl">
-        <cxf:properties>
-            <entry key="dataFormat" value="MESSAGE"/>
-        </cxf:properties>
-    </cxf:cxfEndpoint>
 
     <jaxrs:server id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">
         <jaxrs:serviceBeans>
@@ -40,7 +32,6 @@
         </jaxrs:serviceBeans>
         <jaxrs:extensionMappings>
             <entry key="json" value="application/json"/>
-            <entry key="xml" value="application/xml"/>
         </jaxrs:extensionMappings>
     </jaxrs:server>
 </beans>
