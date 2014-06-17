@@ -14,9 +14,9 @@ public class RequestRoute extends RouteBuilder {
     @Value("${rest.port}")
     private String port;
     @Value("${rest.root}")
-    private String root;
+    private String schema;
     @Override
     public void configure() throws Exception {
-        from("jetty:http://0.0.0.0:"+port+"/"+root).log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
+        from("cxfrs://bean//mauiREST/").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
     }
 }
