@@ -17,6 +17,6 @@ public class RequestRoute extends RouteBuilder {
     private String schema;
     @Override
     public void configure() throws Exception {
-        from("cxfrs://bean//mauiREST/").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
+        from("cxfrs://bean://mauiREST/").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
     }
 }
