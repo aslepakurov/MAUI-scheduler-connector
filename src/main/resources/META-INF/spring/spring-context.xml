@@ -27,7 +27,7 @@
         </property>
     </bean>
 
-    <cxf:rsServer id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">
+    <cxf:rsServer id="mauiREST" address="/maui">
         <cxf:serviceBeans>
             <ref bean="MAUIService"/>
         </cxf:serviceBeans>
