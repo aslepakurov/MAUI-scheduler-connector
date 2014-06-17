@@ -27,13 +27,13 @@
         </property>
     </bean>
 
-    <cxf:rsServer id="mauiREST" address="/maui">
-        <cxf:serviceBeans>
-            <ref bean="MAUIService"/>
-        </cxf:serviceBeans>
-        <cxf:extensionMappings>
-            <entry key="json" value="application/json"/>
-        </cxf:extensionMappings>
+    <cxf:rsServer id="mauiREST" address="/maui" serviceClass="MAUIService">
+        <!--<cxf:serviceBeans>-->
+            <!--<ref bean="MAUIService"/>-->
+        <!--</cxf:serviceBeans>-->
+        <!--<cxf:extensionMappings>-->
+            <!--<entry key="json" value="application/json"/>-->
+        <!--</cxf:extensionMappings>-->
     </cxf:rsServer>
 
     <!--<jaxrs:server id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">-->
