@@ -17,6 +17,6 @@ public class RequestRoute extends RouteBuilder {
     private String root;
     @Override
     public void configure() throws Exception {
-        from("jetty:http://0.0.0.0:"+port+"/"+root+"/maui/status").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
+        from("jetty:http://0.0.0.0:"+port+"/"+root).log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
     }
 }
