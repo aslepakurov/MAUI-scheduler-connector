@@ -77,4 +77,11 @@ public class RequestDAO {
     public boolean collectionExist() {
         return mongoTemplate.collectionExists(Request.class);
     }
+
+    /**
+     * For tests
+     */
+    void setMongoTemplate(MongoOperations mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
 }

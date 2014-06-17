@@ -1,6 +1,7 @@
 package ua.kpi.comsys.maui.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import ua.kpi.comsys.maui.domain.Request;
@@ -45,5 +46,12 @@ public class RequestService {
 
     public void save(Request request) {
         dao.save(request);
+    }
+
+    /**
+     * For tests
+     */
+    void setDao(RequestDAO dao) {
+        this.dao = dao;
     }
 }

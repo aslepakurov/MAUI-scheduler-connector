@@ -5,10 +5,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/osgi http://camel.apache.org/schema/osgi/camel-osgi.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
 
     <!--<import resource="classpath:META-INF/cxf/cxf.xml"/>-->
     <!--<import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml"/>-->
@@ -26,12 +27,21 @@
         </property>
     </bean>
 
-    <jaxrs:server id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">
-        <jaxrs:serviceBeans>
+    <cxf:rsServer id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">
+        <cxf:serviceBeans>
             <ref bean="MAUIService"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:extensionMappings>
+        </cxf:serviceBeans>
+        <cxf:extensionMappings>
             <entry key="json" value="application/json"/>
-        </jaxrs:extensionMappings>
-    </jaxrs:server>
+        </cxf:extensionMappings>
+    </cxf:rsServer>
+
+    <!--<jaxrs:server id="mauiREST" address="http://0.0.0.0:${rest.port}/${rest.root}">-->
+        <!--<jaxrs:serviceBeans>-->
+            <!--<ref bean="MAUIService"/>-->
+        <!--</jaxrs:serviceBeans>-->
+        <!--<jaxrs:extensionMappings>-->
+            <!--<entry key="json" value="application/json"/>-->
+        <!--</jaxrs:extensionMappings>-->
+    <!--</jaxrs:server>-->
 </beans>
