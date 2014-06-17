@@ -12,6 +12,6 @@ import org.apache.camel.builder.RouteBuilder;
 public class RequestRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("cxfrs://bean//mauiREST/request").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
+        from("cxfrs://bean//mauiREST/").log(LoggingLevel.INFO, "--------!!!!!SUPER WORKING CXF!!!!!--------");
     }
 }

@@ -27,7 +27,7 @@
         </property>
     </bean>
 
-    <cxf:rsServer id="mauiREST" address="/maui" serviceClass="MAUIService">
+    <cxf:rsServer id="mauiREST" address="/rest" serviceClass="ua.kpi.comsys.maui.rest.MAUIService">
         <!--<cxf:serviceBeans>-->
             <!--<ref bean="MAUIService"/>-->
         <!--</cxf:serviceBeans>-->
